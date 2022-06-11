@@ -8,6 +8,29 @@ using namespace std;
 
 World::World()
 {
+
+	// Create rooms
+	Room* room1 = new Room("Captain room", "You are in a little room.");
+	Room* room2 = new Room("Hall", "You are in a big room.");
+	Room* room3 = new Room("Crew room", "You are in a little room.");
+	Room* room4 = new Room("Work room", "You are in Work room.");
+	Room* room5 = new Room("Depressurization chamber A1", "You are in Depressurization chamber A1.");
+	Room* room6 = new Room("Ocean", "It's very dark you can't see anything.");
+	Room* room7 = new Room("Ocean", "It's very dark you can't see anything.");
+	Room* room8 = new Room("Depressurization chamber A2", "You are in Depressurization chamber A2.");
+	Room* room9 = new Room("Infirmary", "You are in infirmary.");
+
+	//Add rooms
+	entities.push_back(room1);
+	entities.push_back(room2);
+	entities.push_back(room3);
+	entities.push_back(room4);
+	entities.push_back(room5);
+	entities.push_back(room6);
+	entities.push_back(room7);
+	entities.push_back(room8);
+	entities.push_back(room9);
+
 }
 
 //-------------------------------------------------------------------------

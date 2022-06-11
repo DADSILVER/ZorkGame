@@ -1,4 +1,3 @@
-#pragma once
 #include "Entity.h"
 
 #include <string>
@@ -13,5 +12,10 @@ class Room :
 	public:
 		Room(const char* name, const char* description);
 		~Room();
+
+		void Look() const;
+
+
+public:
 };
 

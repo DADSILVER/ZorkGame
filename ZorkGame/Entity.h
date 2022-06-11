@@ -22,15 +22,17 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 		virtual ~Entity();
 
+		void Look() const;
+
 		virtual void Tick();
 
 	public:
-		EntityType type;
-		string name;
-		string description;
+		EntityType M_type;
+		string M_name;
+		string M_description;
 
-		Entity* parent;
-		list<Entity*> contains;
+		Entity* M_parent;
+		list<Entity*> M_contains;
 
 };
 

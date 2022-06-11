@@ -5,6 +5,9 @@
 #include <time.h>
 #include <vector>
 
+#include "Room.h"
+
+
 #define TICK_FREQUENCY 0.5f
 
 using namespace std;
