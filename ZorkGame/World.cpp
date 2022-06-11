@@ -3,6 +3,8 @@
 #include "globals.h"
 #include "entity.h"
 
+using namespace std;
+
 
 World::World()
 {
@@ -64,27 +66,21 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (Same(args[0], "north") || Same(args[0], "n"))
 		{
-			(args.size() == 1) ? args.push_back("north") : args[1] = "north";
 		}
 		else if (Same(args[0], "south") || Same(args[0], "s"))
 		{
-			(args.size() == 1) ? args.push_back("south") : args[1] = "south";
 		}
 		else if (Same(args[0], "east") || Same(args[0], "e"))
 		{
-			(args.size() == 1) ? args.push_back("east") : args[1] = "east";
 		}
 		else if (Same(args[0], "west") || Same(args[0], "w"))
 		{
-			(args.size() == 1) ? args.push_back("west") : args[1] = "west";
 		}
 		else if (Same(args[0], "up") || Same(args[0], "u"))
 		{
-			(args.size() == 1) ? args.push_back("up") : args[1] = "up";
 		}
 		else if (Same(args[0], "down") || Same(args[0], "d"))
 		{
-			(args.size() == 1) ? args.push_back("down") : args[1] = "down";
 		}
 		else if (Same(args[0], "stats") || Same(args[0], "st"))
 		{
