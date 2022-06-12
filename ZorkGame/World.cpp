@@ -2,6 +2,7 @@
 #include "World.h"
 #include "globals.h"
 #include "entity.h"
+#include "exit.h"
 
 using namespace std;
 
@@ -10,26 +11,51 @@ World::World()
 {
 
 	// Create rooms
-	Room* room1 = new Room("Captain room", "You are in a little room.");
-	Room* room2 = new Room("Hall", "You are in a big room.");
-	Room* room3 = new Room("Crew room", "You are in a little room.");
-	Room* room4 = new Room("Work room", "You are in Work room.");
-	Room* room5 = new Room("Depressurization chamber A1", "You are in Depressurization chamber A1.");
-	Room* room6 = new Room("Ocean", "It's very dark you can't see anything.");
-	Room* room7 = new Room("Ocean", "It's very dark you can't see anything.");
-	Room* room8 = new Room("Depressurization chamber A2", "You are in Depressurization chamber A2.");
-	Room* room9 = new Room("Infirmary", "You are in infirmary.");
+	Room* cptRoom = new Room("Captain room", "You are in a little room.");
+	Room* hall = new Room("Hall", "You are in a big room.");
+	Room* crewRoom = new Room("Crew room", "You are in a little room.");
+	Room* workRoom = new Room("Work room", "You are in Work room.");
+	Room* chD1 = new Room("Depressurization chamber A1", "You are in Depressurization chamber A1.");
+	Room* ocean1 = new Room("Ocean", "It's very dark you can't see anything.");
+	//Room* room7 = new Room("Ocean", "It's very dark you can't see anything.");
+	Room* chD2 = new Room("Depressurization chamber A2", "You are in Depressurization chamber A2.");
+	Room* infirmary = new Room("Infirmary", "You are in infirmary.");
 
 	//Add rooms
-	entities.push_back(room1);
-	entities.push_back(room2);
-	entities.push_back(room3);
-	entities.push_back(room4);
-	entities.push_back(room5);
-	entities.push_back(room6);
-	entities.push_back(room7);
-	entities.push_back(room8);
-	entities.push_back(room9);
+	entities.push_back(cptRoom);
+	entities.push_back(hall);
+	entities.push_back(crewRoom);
+	entities.push_back(workRoom);
+	entities.push_back(chD1);
+	entities.push_back(ocean1);
+	//entities.push_back(room7);
+	entities.push_back(chD2);
+	entities.push_back(infirmary);
+
+	//*************************************************************//
+
+	//Create Exits
+	Exit* hallCptRoom = new Exit("north", "south", "Door", hall, cptRoom);
+	Exit* hallCrewRoom = new Exit("south", "north", "Door", hall, crewRoom);
+	Exit* hallWorkRoom = new Exit("west", "east", "Little path", hall, workRoom);
+	hallWorkRoom->M_locked = true;
+	Exit* hallChD1 = new Exit("north", "south", "Door", hall, chD1);
+	Exit* ocenaChD1 = new Exit("east", "west", "Robust door", ocean1, chD1);
+	ocenaChD1->M_locked = true;
+	Exit* ocenaChD2 = new Exit("east", "west", "Robust door", ocean1, chD2);
+	Exit* infirmaryChD2 = new Exit("east", "west", "Little path", infirmary, chD2);
+	infirmaryChD2->M_locked = true;
+
+	//Add Exits
+	entities.push_back(hallCptRoom);
+	entities.push_back(hallCrewRoom);
+	entities.push_back(hallWorkRoom);
+	entities.push_back(hallChD1);
+	entities.push_back(ocenaChD1);
+	entities.push_back(ocenaChD2);
+	entities.push_back(infirmaryChD2);
+
+	//*************************************************************//
 
 }
 
