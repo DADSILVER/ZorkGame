@@ -32,19 +32,18 @@ World::World()
 	entities.push_back(chD2);
 	entities.push_back(infirmary);
 
-	//*************************************************************//
 
 	//Create Exits
 	Exit* hallCptRoom = new Exit("north", "south", "Door", hall, cptRoom);
 	Exit* hallCrewRoom = new Exit("south", "north", "Door", hall, crewRoom);
 	Exit* hallWorkRoom = new Exit("west", "east", "Little path", hall, workRoom);
-	hallWorkRoom->M_locked = true;
+	hallWorkRoom->m_Locked = true;
 	Exit* hallChD1 = new Exit("north", "south", "Door", hall, chD1);
 	Exit* ocenaChD1 = new Exit("east", "west", "Robust door", ocean1, chD1);
-	ocenaChD1->M_locked = true;
+	ocenaChD1->m_Locked = true;
 	Exit* ocenaChD2 = new Exit("east", "west", "Robust door", ocean1, chD2);
 	Exit* infirmaryChD2 = new Exit("east", "west", "Little path", infirmary, chD2);
-	infirmaryChD2->M_locked = true;
+	infirmaryChD2->m_Locked = true;
 
 	//Add Exits
 	entities.push_back(hallCptRoom);
@@ -55,36 +54,33 @@ World::World()
 	entities.push_back(ocenaChD2);
 	entities.push_back(infirmaryChD2);
 
-	//*************************************************************//
 
 }
-
-//-------------------------------------------------------------------------
 
 World::~World()
 {
-	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it) 
+	{
 		delete* it;
+
+	}
 
 	entities.clear();
 }
-
-
-//-------------------------------------------------------------------------
 
 bool World::Tick(vector<string>& args)
 {
 	bool ret = true;
 
 	if (args.size() > 0 && args[0].length() > 0)
+	{
 		ret = ParseCommand(args);
+	}
 
 	GameLoop();
 
 	return ret;
 }
-
-//-------------------------------------------------------------------------
 
 void World::GameLoop()
 {
@@ -93,14 +89,13 @@ void World::GameLoop()
 	if ((now - tick_timer) / CLOCKS_PER_SEC > TICK_FREQUENCY)
 	{
 		for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
+		{
 			(*it)->Tick();
+		}
 
 		tick_timer = now;
 	}
 }
-
-//-------------------------------------------------------------------------
-
 
 bool World::ParseCommand(vector<string>& args)
 {

@@ -27,12 +27,12 @@ class Entity
 		virtual void Tick();
 
 	public:
-		EntityType M_type;
-		string M_name;
-		string M_description;
+		EntityType m_Type;
+		string m_Name;
+		string m_Description;
 
-		Entity* M_parent;
-		list<Entity*> M_contains;
+		Entity* m_Parent;
+		list<Entity*> m_Contains;
 
 };
 

@@ -3,6 +3,8 @@
 #include <string>
 #include <list>
 
+class Exit;
+
 using namespace std;
 
 
@@ -13,7 +15,8 @@ class Room :
 		Room(const char* name, const char* description);
 		~Room();
 
-		void Look() const;
+		void look() const;
+		Exit* getExit(const string& direction) const;
 
 
 public:

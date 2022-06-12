@@ -1,28 +1,24 @@
 #include <iostream>
 #include "Entity.h"
 
-// ----------------------------------------------------
 Entity::Entity(const char* name, const char* description, Entity* parent) :
-	M_name(name), M_description(description), M_parent(parent)
+	m_Name(name), m_Description(description), m_Parent(parent)
 {
-	M_type = ENTITY;
+	m_Type = ENTITY;
 
 	if (parent != NULL)
-		parent->M_contains.push_back(this);
+		parent->m_Contains.push_back(this);
 }
 
-// ----------------------------------------------------
 Entity::~Entity()
 {}
 
-// ----------------------------------------------------
 void Entity::Look() const
 {
-	cout << M_name << "\n";
-	cout << M_description << "\n";
+	cout << m_Name << "\n";
+	cout << m_Description << "\n";
 }
 
-// ----------------------------------------------------
 void Entity::Tick()
 {}
 
