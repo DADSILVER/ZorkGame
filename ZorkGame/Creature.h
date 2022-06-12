@@ -19,6 +19,7 @@ public:
 	virtual bool go(const vector<string>& args);
 	virtual void look(const vector<string>& args) const;
 	virtual void tick();
+	virtual void inventory() const;
 
 	Room* getRoom() const;
 	bool playerInRoom() const;

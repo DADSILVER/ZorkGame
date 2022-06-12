@@ -36,7 +36,23 @@ void Creature::tick()
 {
 }
 
+void Creature::inventory() const
+{
+	list<Entity*> items;
+	findAll(ITEM, items);
 
+	if (items.size() == 0)
+	{
+		cout << "\n" << m_Name << " does not own any items\n";
+		return;
+	}
+
+	cout << "\n" << m_Name << " owns:\n";
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+	{
+		cout << (*it)->m_Name << "\n";
+	}
+}
 
 bool Creature::go(const vector<string>& args)
 {

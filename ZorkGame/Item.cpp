@@ -14,7 +14,7 @@ Item::~Item()
 
 void Item::look() const
 {
-	cout << "\n" << m_Name << "\n";
+	cout << "\n" << m_Name << ": ";
 	cout << m_Description << "\n";
 
 	list<Entity*> stuff;

@@ -160,6 +160,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "inventory") || same(args[0], "i"))
 		{
+			m_Player->inventory();
 		}
 		else
 			ret = false;

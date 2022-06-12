@@ -66,10 +66,14 @@ void Player::take(const vector<string>& args)
 	if (item == NULL)
 	{
 		cout << "\nThere is no item here with that name.\n";
+	}else
+	{
+		cout << "\nYou take " << args[1] << ".\n";
+		item->changeParentTo(this);
 	}
 
-	cout << "\nYou take " << args[1] << ".\n";
-	item->changeParentTo(this);
+	
 
 }
+
 
