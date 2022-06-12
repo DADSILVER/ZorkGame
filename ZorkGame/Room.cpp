@@ -5,6 +5,7 @@
 #include "Exit.h"
 #include "globals.h"
 #include "NPC.h"
+#include "Item.h"
 
 
 Room::Room(const char* name, const char* description) :
@@ -34,13 +35,23 @@ void Room::look() const
 		}
 	}
 
-	//NPC
+	//NPCs
 
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		if ((*it)->m_Type == NPCAlly)
 		{
 			NPC* Npc = (NPC*)*it;
 			Npc->look();
+		}
+	}
+
+	//Items
+
+	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
+		if ((*it)->m_Type == ITEM)
+		{
+			Item* item = (Item*)*it;
+			item->look();
 		}
 	}
 

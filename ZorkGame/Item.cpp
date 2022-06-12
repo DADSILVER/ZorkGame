@@ -1,8 +1,8 @@
 #include <iostream>
 #include "Item.h"
 
-Item::Item(const char* name, const char* description, Room* room, ItemType itemType):
-	Entity(name, description, room)
+Item::Item(const char* name, const char* description, Entity* parent, ItemType itemType):
+	Entity(name, description, parent)
 {
 	m_Type = ITEM;
 	m_ItemType = itemType;

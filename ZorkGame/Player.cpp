@@ -3,6 +3,7 @@
 #include "exit.h"
 #include "player.h"
 #include "NPC.h"
+#include "Item.h"
 
 Player::Player(const char* name, const char* description, Room* room):
 Creature(name, description, room)
@@ -56,5 +57,19 @@ void Player::talk(const vector<string>& args)
 		cout << "\nDon't exist.\n";
 	}
 	
+}
+
+void Player::take(const vector<string>& args)
+{
+	Item* item = (Item*)m_Parent->find(args[1], ITEM);
+
+	if (item == NULL)
+	{
+		cout << "\nThere is no item here with that name.\n";
+	}
+
+	cout << "\nYou take " << args[1] << ".\n";
+	item->changeParentTo(this);
+
 }
 

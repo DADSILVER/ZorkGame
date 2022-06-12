@@ -72,7 +72,7 @@ World::World()
 
 
 	// Create Items
-	Item* key = new Item("Card key", "Open restricted areas.", cptRoom,KEY);
+	Item* key = new Item("Cardkey", "Open restricted areas.", cptRoom,KEY);
 
 	//Add NPCs
 	entities.push_back(key);
@@ -176,6 +176,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "take") || same(args[0], "pick"))
 		{
+			m_Player->take(args);
 		}
 		else if (same(args[0], "drop") || same(args[0], "put"))
 		{
