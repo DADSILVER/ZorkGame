@@ -13,6 +13,13 @@ Player::~Player()
 {
 }
 
+void Player::look(const vector<string>& args)
+{
+	cout << "\n" << m_Name << "\n";
+	cout << m_Description << "\n";
+	m_Parent->look();
+}
+
 bool Player::go(const vector<string>& args)
 {
 	Exit* exit = getRoom()->getExit(args[1]);
@@ -35,6 +42,3 @@ bool Player::go(const vector<string>& args)
 	return true;
 }
 
-void Player::look(const vector<string>& args) const
-{
-}

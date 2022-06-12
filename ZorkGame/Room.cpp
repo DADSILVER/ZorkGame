@@ -23,6 +23,16 @@ void Room::look() const
 	cout << "\n" << m_Name << "\n";
 	cout << m_Description;
 
+	//exits
+
+	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
+		if ((*it)->m_Type == EXIT)
+		{
+			Exit* ex = (Exit*)*it;
+			cout << "\nDirection (" << ex->getNameFrom(this) << ") you see " << ex->getDestinationFrom(this)->m_Name;
+		}
+	}
+
 	cout << "\n";
 }
 
@@ -33,7 +43,7 @@ Exit* Room::getExit(const string& direction) const
 		if ((*it)->m_Type == EXIT)
 		{
 			Exit* ex = (Exit*)*it;
-			if (Same(ex->getNameFrom(this), direction))
+			if (same(ex->getNameFrom(this), direction))
 				return ex;
 		}
 	}

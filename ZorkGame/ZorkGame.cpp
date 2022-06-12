@@ -1,14 +1,73 @@
-// ZorkGame.cpp : Este archivo contiene la función "main". La ejecución del programa comienza y termina ahí.
-//
 
 #include <iostream>
 #include <string>
 #include <vector>
+#include <conio.h>
 #include "world.h"
+#include "globals.h"
+
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    char key;
+	string player_input;
+	vector<string> args;
+	args.reserve(10);
+
+	cout << "Welcome to MyZork!\n";
+	cout << "----------------\n";
+
+	World my_world;
+
+	args.push_back("look");
+
+	while (1)
+	{
+		if (_kbhit != 0)
+		{
+			key = _getch();
+			if (key == '\b') // backspace
+			{
+				if (player_input.length() > 0)
+				{
+					player_input.pop_back();
+					//cout << BACKSPACE;
+					cout << '\b';
+					cout << " ";
+					cout << '\b';
+				}
+			}
+			else if (key != '\r') // return
+			{
+				player_input += key;
+				cout << key;
+			}
+			else
+			{
+				tokenize(player_input, args);
+			}
+		}
+
+		if (args.size() > 0 && same(args[0], "quit"))
+		{
+			break;
+		}
+
+		if (my_world.Tick(args) == false)
+			cout << "\nSorry, I do not understand your command.\n";
+
+
+		if (args.size() > 0)
+		{
+			args.clear();
+			player_input = "";
+			cout << "> ";
+		}
+
+	}
+
+    
 }
 
 // Ejecutar programa: Ctrl + F5 o menú Depurar > Iniciar sin depurar

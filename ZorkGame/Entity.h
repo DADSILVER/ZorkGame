@@ -22,7 +22,7 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 		virtual ~Entity();
 
-		void look() const;
+		virtual void look() const;
 
 		virtual void tick();
 

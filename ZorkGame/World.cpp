@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "entity.h"
 #include "exit.h"
+#include "Player.h"
 
 using namespace std;
 
@@ -55,6 +56,11 @@ World::World()
 	entities.push_back(infirmaryChD2);
 
 
+	// Add palyer
+	m_Player = new Player("Captian", "You are the captain of the place", cptRoom);
+	m_Player->m_HitPoints = 25;
+	entities.push_back(m_Player);
+
 }
 
 World::~World()
@@ -90,7 +96,7 @@ void World::GameLoop()
 	{
 		for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); ++it)
 		{
-			(*it)->Tick();
+			(*it)->tick();
 		}
 
 		tick_timer = now;
@@ -105,31 +111,33 @@ bool World::ParseCommand(vector<string>& args)
 	{
 	case 1: // commands with no arguments ------------------------------
 	{
-		if (Same(args[0], "look") || Same(args[0], "l"))
+		if (same(args[0], "look") || same(args[0], "l"))
+		{
+			m_Player->look(args);
+		}
+		else if (same(args[0], "north") || same(args[0], "n"))
+		{
+			
+		}
+		else if (same(args[0], "south") || same(args[0], "s"))
 		{
 		}
-		else if (Same(args[0], "north") || Same(args[0], "n"))
+		else if (same(args[0], "east") || same(args[0], "e"))
 		{
 		}
-		else if (Same(args[0], "south") || Same(args[0], "s"))
+		else if (same(args[0], "west") || same(args[0], "w"))
 		{
 		}
-		else if (Same(args[0], "east") || Same(args[0], "e"))
+		else if (same(args[0], "up") || same(args[0], "u"))
 		{
 		}
-		else if (Same(args[0], "west") || Same(args[0], "w"))
+		else if (same(args[0], "down") || same(args[0], "d"))
 		{
 		}
-		else if (Same(args[0], "up") || Same(args[0], "u"))
+		else if (same(args[0], "stats") || same(args[0], "st"))
 		{
 		}
-		else if (Same(args[0], "down") || Same(args[0], "d"))
-		{
-		}
-		else if (Same(args[0], "stats") || Same(args[0], "st"))
-		{
-		}
-		else if (Same(args[0], "inventory") || Same(args[0], "i"))
+		else if (same(args[0], "inventory") || same(args[0], "i"))
 		{
 		}
 		else
@@ -138,31 +146,32 @@ bool World::ParseCommand(vector<string>& args)
 	}
 	case 2: // commands with one argument ------------------------------
 	{
-		if (Same(args[0], "look") || Same(args[0], "l"))
+		if (same(args[0], "look") || same(args[0], "l"))
 		{
 		}
-		else if (Same(args[0], "go"))
+		else if (same(args[0], "go"))
+		{
+			m_Player->go(args);
+		}
+		else if (same(args[0], "take") || same(args[0], "pick"))
 		{
 		}
-		else if (Same(args[0], "take") || Same(args[0], "pick"))
+		else if (same(args[0], "drop") || same(args[0], "put"))
 		{
 		}
-		else if (Same(args[0], "drop") || Same(args[0], "put"))
+		else if (same(args[0], "equip") || same(args[0], "eq"))
 		{
 		}
-		else if (Same(args[0], "equip") || Same(args[0], "eq"))
+		else if (same(args[0], "unequip") || same(args[0], "uneq"))
 		{
 		}
-		else if (Same(args[0], "unequip") || Same(args[0], "uneq"))
+		else if (same(args[0], "examine") || same(args[0], "ex"))
 		{
 		}
-		else if (Same(args[0], "examine") || Same(args[0], "ex"))
+		else if (same(args[0], "attack") || same(args[0], "at"))
 		{
 		}
-		else if (Same(args[0], "attack") || Same(args[0], "at"))
-		{
-		}
-		else if (Same(args[0], "loot") || Same(args[0], "lt"))
+		else if (same(args[0], "loot") || same(args[0], "lt"))
 		{
 		}
 		else
@@ -175,16 +184,16 @@ bool World::ParseCommand(vector<string>& args)
 	}
 	case 4: // commands with three arguments ------------------------------
 	{
-		if (Same(args[0], "unlock") || Same(args[0], "unlk"))
+		if (same(args[0], "unlock") || same(args[0], "unlk"))
 		{
 		}
-		else if (Same(args[0], "lock") || Same(args[0], "lk"))
+		else if (same(args[0], "lock") || same(args[0], "lk"))
 		{
 		}
-		else if (Same(args[0], "take") || Same(args[0], "pick"))
+		else if (same(args[0], "take") || same(args[0], "pick"))
 		{
 		}
-		else if (Same(args[0], "drop") || Same(args[0], "put"))
+		else if (same(args[0], "drop") || same(args[0], "put"))
 		{
 		}
 		else

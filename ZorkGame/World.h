@@ -13,6 +13,7 @@
 using namespace std;
 
 class Entity;
+class Player;
 
 class World
 {
@@ -29,6 +30,7 @@ private:
 
 	clock_t tick_timer;
 	list<Entity*> entities;
+	Player* m_Player;
 	
 };
 
