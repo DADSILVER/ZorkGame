@@ -13,6 +13,7 @@ public:
 
 	void look(const vector<string>& args);
 	bool go(const vector<string>& args);
+	void talk(const vector<string>& args);
 
 public:
 

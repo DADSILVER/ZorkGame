@@ -12,7 +12,8 @@ enum EntityType
 	EXIT,
 	ITEM,
 	CREATURE,
-	PLAYER
+	PLAYER,
+	NPCAlly
 };
 
 
@@ -28,6 +29,7 @@ class Entity
 
 		void changeParentTo(Entity* new_parent);
 		Entity* find(EntityType type) const;
+		Entity* find(const string& name, EntityType type) const;
 
 	public:
 		EntityType m_Type;

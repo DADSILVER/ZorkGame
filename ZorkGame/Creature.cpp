@@ -12,6 +12,7 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 	m_HitPoints = 1;
 	m_MinDamage = m_MaxDamage = m_MinProtection = m_MaxProtection = 0;
 	m_CombatTarget = NULL;
+
 }
 
 Creature::~Creature()

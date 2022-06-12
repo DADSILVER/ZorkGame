@@ -32,5 +32,6 @@ public:
 	int m_MinProtection;
 	int m_MaxProtection;
 	Creature* m_CombatTarget;
+
 };
 

@@ -4,6 +4,7 @@
 #include "entity.h"
 #include "exit.h"
 #include "Player.h"
+#include "NPC.h"
 
 using namespace std;
 
@@ -55,7 +56,14 @@ World::World()
 	entities.push_back(ocenaChD2);
 	entities.push_back(infirmaryChD2);
 
-
+	// Create NPC
+	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom);
+	jonny->m_State = "Seriously injured";
+	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom);
+	dolores->m_State = "Trying to healt Jonny";
+	dolores->m_Dialog = "I need more bandages. There is no more in the first aid kit. Go to the infirmary. HURRY UP!!!!";
+	dolores->m_Talkable = true;
+	
 	// Add palyer
 	m_Player = new Player("Captian", "You are the captain of the place", cptRoom);
 	m_Player->m_HitPoints = 25;
@@ -180,6 +188,12 @@ bool World::ParseCommand(vector<string>& args)
 	}
 	case 3: // commands with two arguments ------------------------------
 	{
+		if (same(args[0], "talk") || same(args[0], "t"))
+		{
+			m_Player->talk(args);
+		}
+		else
+			ret = false;
 		break;
 	}
 	case 4: // commands with three arguments ------------------------------
