@@ -31,3 +31,13 @@ const string& Exit::getNameFrom(const Room* room) const
 
 	return m_Name;
 }
+
+Room* Exit::getDestinationFrom(const Room* room) const
+{
+	if (room == m_Parent)
+		return m_Destination;
+	if (room == m_Destination)
+		return (Room*)m_Parent;
+
+	return NULL;
+}

@@ -17,9 +17,9 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 Creature::~Creature()
 {}
 
-void Creature::Look(const vector<string>& args) const
+void Creature::look(const vector<string>& args) const
 {
-	if (IsAlive())
+	if (isAlive())
 	{
 		cout << m_Name << "\n";
 		cout << m_Description << "\n";
@@ -31,32 +31,41 @@ void Creature::Look(const vector<string>& args) const
 	}
 }
 
-
-
-bool Creature::Go(const vector<string>& args)
+void Creature::tick()
 {
-	if (!IsAlive())
+}
+
+
+
+bool Creature::go(const vector<string>& args)
+{
+	if (!isAlive())
 		return false;
 
-	Exit* exit = GetRoom()->getExit(args[1]);
+	Exit* exit = getRoom()->getExit(args[1]);
 
 	if (exit == NULL)
 		return false;
 
-	if (PlayerInRoom())
+	if (playerInRoom())
 		cout << m_Name << "goes " << args[1] << "...\n";
 
-	//ChangeParentTo(exit->GetDestinationFrom((Room*)parent));
+	changeParentTo(exit->getDestinationFrom((Room*)m_Parent));
 
 	return true;
 }
 
-Room* Creature::GetRoom() const
+Room* Creature::getRoom() const
 {
 	return (Room*)m_Parent;
 }
 
-bool Creature::IsAlive() const
+bool Creature::playerInRoom() const
+{
+	return m_Parent->find(PLAYER) != NULL;
+}
+
+bool Creature::isAlive() const
 {
 	return m_HitPoints > 0;
 }

@@ -34,7 +34,7 @@ World::World()
 
 
 	//Create Exits
-	Exit* hallCptRoom = new Exit("north", "south", "Door", hall, cptRoom);
+	Exit* cptRoomHall = new Exit("south", "north", "Door", cptRoom, hall);
 	Exit* hallCrewRoom = new Exit("south", "north", "Door", hall, crewRoom);
 	Exit* hallWorkRoom = new Exit("west", "east", "Little path", hall, workRoom);
 	hallWorkRoom->m_Locked = true;
@@ -46,7 +46,7 @@ World::World()
 	infirmaryChD2->m_Locked = true;
 
 	//Add Exits
-	entities.push_back(hallCptRoom);
+	entities.push_back(cptRoomHall);
 	entities.push_back(hallCrewRoom);
 	entities.push_back(hallWorkRoom);
 	entities.push_back(hallChD1);

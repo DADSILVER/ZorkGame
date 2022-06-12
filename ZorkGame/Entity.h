@@ -22,9 +22,12 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 		virtual ~Entity();
 
-		void Look() const;
+		void look() const;
 
-		virtual void Tick();
+		virtual void tick();
+
+		void changeParentTo(Entity* new_parent);
+		Entity* find(EntityType type) const;
 
 	public:
 		EntityType m_Type;

@@ -16,6 +16,7 @@ public:
 
 	void look() const;
 	const string& getNameFrom(const Room* room) const;
+	Room* getDestinationFrom(const Room* room) const;
 
 public:
 	bool m_OneWay;

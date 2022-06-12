@@ -16,16 +16,13 @@ public:
 	Creature(const char* name, const char* description, Room* room);
 	~Creature();
 
-	virtual bool Go(const vector<string>& args);
-	virtual void Look(const vector<string>& args) const;
-	virtual void Tick();
+	virtual bool go(const vector<string>& args);
+	virtual void look(const vector<string>& args) const;
+	virtual void tick();
 
-	virtual void Die();
-	virtual void Stats() const;
-
-	Room* GetRoom() const;
-	bool PlayerInRoom() const;
-	bool IsAlive() const;
+	Room* getRoom() const;
+	bool playerInRoom() const;
+	bool isAlive() const;
 
 public:
 

@@ -13,12 +13,35 @@ Entity::Entity(const char* name, const char* description, Entity* parent) :
 Entity::~Entity()
 {}
 
-void Entity::Look() const
+void Entity::look() const
 {
 	cout << m_Name << "\n";
 	cout << m_Description << "\n";
 }
 
-void Entity::Tick()
+void Entity::tick()
 {}
+
+void Entity::changeParentTo(Entity * newParent)
+{
+	if (m_Parent != NULL)
+		m_Parent->m_Contains.remove(this);
+
+	m_Parent = newParent;
+
+	if (m_Parent != NULL)
+		m_Parent->m_Contains.push_back(this);
+}
+
+Entity* Entity::find(EntityType type) const
+{
+	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
+	{
+		if ((*it)->m_Type == type)
+		{
+			return *it;
+		}
+	}
+	return NULL;
+}
 
