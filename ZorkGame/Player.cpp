@@ -72,8 +72,6 @@ void Player::take(const vector<string>& args)
 		item->changeParentTo(this);
 	}
 
-	
-
 }
 
 

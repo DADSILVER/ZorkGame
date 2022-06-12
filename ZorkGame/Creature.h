@@ -18,6 +18,8 @@ public:
 
 	virtual bool go(const vector<string>& args);
 	virtual void look(const vector<string>& args) const;
+	virtual void take(const vector<string>& args);
+	virtual bool drop(const vector<string>& args) const;
 	virtual void tick();
 	virtual void inventory() const;
 	virtual bool unlock(const vector<string>& args) const;

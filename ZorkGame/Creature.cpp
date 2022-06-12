@@ -33,6 +33,37 @@ void Creature::look(const vector<string>& args) const
 	}
 }
 
+void Creature::take(const vector<string>& args)
+{
+	Item* item = (Item*)m_Parent->find(args[1], ITEM);
+
+	if (item == NULL)
+	{
+		cout << "\nThere is no item here with that name.\n";
+	}
+	else
+	{
+		cout << "\nYou take " << args[1] << ".\n";
+		item->changeParentTo(this);
+	}
+}
+
+bool Creature::drop(const vector<string>& args) const
+{
+	Item* item = (Item*)this->find(args[1], ITEM);
+
+	if (item == NULL || item->m_Parent != this)
+	{
+		cout << "\nYou don't have this item.\n";
+		return false;
+	}
+
+	cout << "\nYou drop " << args[1] << ".\n";
+	item->changeParentTo(this->m_Parent);
+
+	return true;
+}
+
 void Creature::tick()
 {
 }

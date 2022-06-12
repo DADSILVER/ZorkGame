@@ -41,7 +41,7 @@ World::World()
 	Exit* hallCrewRoom = new Exit("south", "north", "Door", hall, crewRoom);
 	Exit* hallWorkRoom = new Exit("west", "east", "Little path", hall, workRoom);
 	hallWorkRoom->m_Locked = true;
-	Exit* hallChD1 = new Exit("north", "south", "Door", hall, chD1);
+	Exit* hallChD1 = new Exit("east", "west", "Door", hall, chD1);
 	Exit* ocenaChD1 = new Exit("east", "west", "Robust door", ocean1, chD1);
 	ocenaChD1->m_Locked = true;
 	Exit* ocenaChD2 = new Exit("east", "west", "Robust door", ocean1, chD2);
@@ -139,22 +139,23 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "north") || same(args[0], "n"))
 		{
-			
+			args.push_back("north");
+			m_Player->go(args);
 		}
 		else if (same(args[0], "south") || same(args[0], "s"))
 		{
+			args.push_back("south");
+			m_Player->go(args);
 		}
 		else if (same(args[0], "east") || same(args[0], "e"))
 		{
+			args.push_back("east");
+			m_Player->go(args);
 		}
 		else if (same(args[0], "west") || same(args[0], "w"))
 		{
-		}
-		else if (same(args[0], "up") || same(args[0], "u"))
-		{
-		}
-		else if (same(args[0], "down") || same(args[0], "d"))
-		{
+			args.push_back("west");
+			m_Player->go(args);
 		}
 		else if (same(args[0], "stats") || same(args[0], "st"))
 		{
@@ -182,6 +183,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "drop") || same(args[0], "put"))
 		{
+			m_Player->drop(args);
 		}
 		else if (same(args[0], "equip") || same(args[0], "eq"))
 		{
