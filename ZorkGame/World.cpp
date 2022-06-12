@@ -5,6 +5,7 @@
 #include "exit.h"
 #include "Player.h"
 #include "NPC.h"
+#include "Item.h"
 
 using namespace std;
 
@@ -56,6 +57,7 @@ World::World()
 	entities.push_back(ocenaChD2);
 	entities.push_back(infirmaryChD2);
 
+
 	// Create NPC
 	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom);
 	jonny->m_State = "Seriously injured";
@@ -63,7 +65,18 @@ World::World()
 	dolores->m_State = "Trying to healt Jonny";
 	dolores->m_Dialog = "I need more bandages. There is no more in the first aid kit. Go to the infirmary. HURRY UP!!!!";
 	dolores->m_Talkable = true;
-	
+
+	//Add NPCs
+	entities.push_back(jonny);
+	entities.push_back(dolores);
+
+
+	// Create Items
+	Item* key = new Item("Card key", "Open restricted areas.", cptRoom,KEY);
+
+	//Add NPCs
+	entities.push_back(key);
+
 	// Add palyer
 	m_Player = new Player("Captian", "You are the captain of the place", cptRoom);
 	m_Player->m_HitPoints = 25;

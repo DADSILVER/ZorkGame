@@ -31,6 +31,8 @@ class Entity
 		Entity* find(EntityType type) const;
 		Entity* find(const string& name, EntityType type) const;
 
+		void findAll(EntityType type, list<Entity*>& list_to_fill) const;
+
 	public:
 		EntityType m_Type;
 		string m_Name;

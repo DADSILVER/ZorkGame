@@ -58,3 +58,12 @@ Entity* Entity::find(const string& name, EntityType type) const
 	return NULL;
 }
 
+
+void Entity::findAll(EntityType type, list<Entity*>& list_to_fill) const
+{
+	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
+	{
+		if ((*it)->m_Type == type)
+			list_to_fill.push_back(*it);
+	}
+}
