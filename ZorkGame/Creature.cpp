@@ -2,6 +2,7 @@
 #include "Creature.h"
 #include "exit.h"
 #include "room.h"
+#include "Item.h"
 
 
 
@@ -52,6 +53,46 @@ void Creature::inventory() const
 	{
 		cout << (*it)->m_Name << "\n";
 	}
+}
+
+bool Creature::unlock(const vector<string>& args) const
+{
+	if (!isAlive())
+		return false;
+
+	Exit* exit = getRoom()->getExit(args[1]);
+
+	if (exit == NULL)
+	{
+		cout << "\nThere is no exit at '" << args[1] << "'.\n";
+		return false;
+	}
+
+	if (exit->m_Locked == false)
+	{
+		cout << "\nThat exit is not locked.\n";
+		return false;
+	}
+
+	Item* item = (Item*)find(args[3], ITEM);
+
+	if (item == NULL)
+	{
+		cout << "\nKey '" << args[3] << "' not found in your inventory.\n";
+		return false;
+	}
+
+	if (exit->m_Key != item)
+	{
+		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->getNameFrom((Room*)m_Parent) << ".\n";
+		return false;
+	}
+
+	cout << "\nYou unlock " << exit->getNameFrom((Room*)m_Parent) << "...\n";
+
+	exit->m_Locked = false;
+
+	return true;
 }
 
 bool Creature::go(const vector<string>& args)

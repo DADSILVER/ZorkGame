@@ -73,6 +73,7 @@ World::World()
 
 	// Create Items
 	Item* key = new Item("Cardkey", "Open restricted areas.", cptRoom,KEY);
+	hallWorkRoom->m_Key = key;
 
 	//Add NPCs
 	entities.push_back(key);
@@ -215,6 +216,7 @@ bool World::ParseCommand(vector<string>& args)
 	{
 		if (same(args[0], "unlock") || same(args[0], "unlk"))
 		{
+			m_Player->unlock(args);
 		}
 		else if (same(args[0], "lock") || same(args[0], "lk"))
 		{

@@ -20,6 +20,7 @@ public:
 	virtual void look(const vector<string>& args) const;
 	virtual void tick();
 	virtual void inventory() const;
+	virtual bool unlock(const vector<string>& args) const;
 
 	Room* getRoom() const;
 	bool playerInRoom() const;
