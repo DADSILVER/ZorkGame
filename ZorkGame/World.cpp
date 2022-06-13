@@ -224,12 +224,15 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "lock") || same(args[0], "lk"))
 		{
+			m_Player->lock(args);
 		}
 		else if (same(args[0], "take") || same(args[0], "pick"))
 		{
+			m_Player->take(args);
 		}
 		else if (same(args[0], "drop") || same(args[0], "put"))
 		{
+
 		}
 		else
 			ret = false;

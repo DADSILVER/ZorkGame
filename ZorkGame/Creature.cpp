@@ -33,19 +33,50 @@ void Creature::look(const vector<string>& args) const
 	}
 }
 
-void Creature::take(const vector<string>& args)
+bool Creature::take(const vector<string>& args)
 {
-	Item* item = (Item*)m_Parent->find(args[1], ITEM);
-
-	if (item == NULL)
+	if(args.size() == 2)
 	{
-		cout << "\nThere is no item here with that name.\n";
+		Item* item = (Item*)m_Parent->find(args[1], ITEM);
+
+		if (item == NULL)
+		{
+			cout << "\nThere is no item here with that name.\n";
+			return false;
+		}
+
+		cout << "\nYou take " << args[1] << ".\n";
+		item->changeParentTo(this);
+		return true;
 	}
 	else
 	{
-		cout << "\nYou take " << args[1] << ".\n";
-		item->changeParentTo(this);
+		Item* item1 = (Item*)m_Parent->find(args[3], ITEM);
+		if (item1 == NULL)
+		{
+			item1 = (Item*)this->find(args[3], ITEM);
+			if (item1 == NULL)
+			{
+				cout << "\nThere is no item here with that name.\n";
+				return false;
+			}
+		}	
+
+		Item* item2 = (Item*)item1->find(args[1], ITEM);
+
+
+		if (item2 == NULL)
+		{
+			cout << "\nThere is no item here with that name.\n";
+			return false;
+		}
+
+		cout << "\nYou take " << args[1] << " from " << args[3] <<".\n";
+		item2->changeParentTo(this);
+		return true;
 	}
+
+	
 }
 
 bool Creature::drop(const vector<string>& args) const
@@ -139,6 +170,48 @@ bool Creature::unlock(const vector<string>& args) const
 	cout << "\nYou unlock " << exit->getNameFrom((Room*)m_Parent) << "...\n";
 
 	exit->m_Locked = false;
+
+	return true;
+}
+
+bool Creature::lock(const vector<string>& args) const
+{
+	if (!isAlive())
+	{
+		return false;
+	}
+
+	Exit* exit = getRoom()->getExit(args[1]);
+
+	if (exit == NULL)
+	{
+		cout << "\nThere is no exit at '" << args[1] << "'.\n";
+		return false;
+	}
+
+	if (exit->m_Locked == true)
+	{
+		cout << "\nThat exit is locked.\n";
+		return false;
+	}
+
+	Item* item = (Item*)find(args[3], ITEM);
+
+	if (item == NULL)
+	{
+		cout << "\nKey '" << args[3] << "' not found in your inventory.\n";
+		return false;
+	}
+
+	if (exit->m_Key != item)
+	{
+		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->getNameFrom((Room*)m_Parent) << ".\n";
+		return false;
+	}
+
+	cout << "\nYou lock " << exit->getNameFrom((Room*)m_Parent) << "...\n";
+
+	exit->m_Locked = true;
 
 	return true;
 }
