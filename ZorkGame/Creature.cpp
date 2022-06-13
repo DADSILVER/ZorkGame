@@ -7,7 +7,7 @@
 
 
 Creature::Creature(const char* name, const char* description, Room* room) :
-	Entity(name, description, (Entity*)room)
+	Entity(name, description, room)
 {
 	m_Type = CREATURE;
 	m_HitPoints = 1;
@@ -122,14 +122,14 @@ bool Creature::drop(const vector<string>& args)
 	}
 	else if (item == m_Weapon)
 	{
-		m_MaxDamage += m_Weapon->m_MaxValue;
-		m_MinDamage += m_Weapon->m_MinValue;
+		m_MaxDamage -= m_Weapon->m_MaxValue;
+		m_MinDamage -= m_Weapon->m_MinValue;
 		m_Weapon = nullptr;
 	}
 	else if (item == m_Skin)
 	{
-		m_MaxDamage += m_Skin->m_MaxValue;
-		m_MinDamage += m_Skin->m_MinValue;
+		m_MaxDamage -= m_Skin->m_MaxValue;
+		m_MinDamage -= m_Skin->m_MinValue;
 		m_Skin = nullptr;
 	}
 	item->changeParentTo(this->m_Parent);
@@ -159,10 +159,11 @@ bool Creature::equip(const vector<string>& args)
 			cout << "\nThe object was equipped.\n";
 			return false;
 		}
-		cout << "\nItem " << m_Name << " equipped as skin.\n";
+		
 		m_Skin = item;
 		m_MaxProtection += m_Skin->m_MaxValue;
 		m_MinProtection += m_Skin->m_MinValue;
+		cout << "\nItem " << m_Skin->m_Name << " equipped as skin.\n";
 	}
 	else  if(item->m_ItemType == ItemType::WEAPON)
 	{
@@ -171,10 +172,22 @@ bool Creature::equip(const vector<string>& args)
 			cout << "\nThe object was equipped.\n";
 			return false;
 		}
-		cout << "\nItem " << m_Name << " equipped as weapon.\n";
+		
 		m_Weapon = item;
 		m_MaxDamage += m_Weapon->m_MaxValue;
 		m_MinDamage += m_Weapon->m_MinValue;
+		cout << "\nItem " << m_Weapon->m_Name << " equipped as weapon.\n";
+	}
+	else  if (item->m_ItemType == ItemType::LANTERN)
+	{
+		if (item == m_Helmet)
+		{
+			cout << "\nThe object was equipped.\n";
+			return false;
+		}
+		
+		m_Helmet = item;
+		cout << "\nItem " << m_Helmet->m_Name << " equipped as helmet.\n";
 	}
 	else
 	{

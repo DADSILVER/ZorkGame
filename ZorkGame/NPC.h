@@ -7,7 +7,7 @@ public:
     NPC(const char* name, const char* description, Room* room);
     ~NPC();
 
-    void look() const;
+    void look(const vector<string>& args) const;
 
     virtual void talk();
 

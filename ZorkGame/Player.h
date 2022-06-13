@@ -1,5 +1,6 @@
 #pragma once
 #include "creature.h"
+#include <string.h>
 
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
 	bool take(const vector<string>& args);
 
 public:
+	string m_LastMove;
 
 };
 

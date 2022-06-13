@@ -14,7 +14,7 @@ public:
 	Exit(const char* name, const char* opposite_name, const char* description, Room* origin, Room* destination, bool one_way = false);
 	~Exit();
 
-	void look() const;
+	void look(const vector<string>& args) const;
 	const string& getNameFrom(const Room* room) const;
 	Room* getDestinationFrom(const Room* room) const;
 

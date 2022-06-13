@@ -42,8 +42,21 @@ bool Player::go(const vector<string>& args)
 		return false;
 	}
 
-	cout << "\nYou take direction " << exit->getNameFrom((Room*)m_Parent) << "...\n";
-	changeParentTo(exit->getDestinationFrom((Room*)m_Parent));
+	if (args[1] == exit->m_OppositeName)
+	{
+		m_LastMove = exit->m_Name;
+	}
+	else
+	{
+		m_LastMove = exit->m_OppositeName;
+	}
+	cout << "\nYou take direction " << exit->getNameFrom(dynamic_cast<Room*>(m_Parent)) << "...\n";
+	changeParentTo(exit->getDestinationFrom(dynamic_cast<Room*>(m_Parent)));
+	if (m_Helmet == nullptr && dynamic_cast<Room*>(m_Parent)->m_RoomType == RoomType::OCEAN)
+	{
+		cout << "\nIt's very dark you can't see anything.\n";
+		return true;
+	}
 	m_Parent->look(args);
 
 	return true;
@@ -51,9 +64,9 @@ bool Player::go(const vector<string>& args)
 
 void Player::talk(const vector<string>& args)
 {
-	NPC* persToTalk = (NPC*) m_Parent->find(args[2], NPCAlly);
+	NPC* persToTalk = dynamic_cast<NPC*> (m_Parent->find(args[2], NPCAlly));
 
-	if(persToTalk != NULL)
+	if(persToTalk != nullptr)
 	{
 		persToTalk->talk();
 	}
@@ -68,9 +81,9 @@ bool Player::take(const vector<string>& args)
 {
 	if (args.size() == 2)
 	{
-		Item* item = (Item*)m_Parent->find(args[1], ITEM);
+		Item* item = dynamic_cast<Item*>(m_Parent->find(args[1], ITEM));
 
-		if (item == NULL)
+		if (item == nullptr)
 		{
 			cout << "\nThere is no item here with that name.\n";
 			return false;
@@ -82,21 +95,21 @@ bool Player::take(const vector<string>& args)
 	}
 	else
 	{
-		Item* item1 = (Item*)m_Parent->find(args[3], ITEM);
-		if (item1 == NULL)
+		Item* item1 = dynamic_cast<Item*>(m_Parent->find(args[3], ITEM));
+		if (item1 == nullptr)
 		{
-			item1 = (Item*)this->find(args[3], ITEM);
-			if (item1 == NULL)
+			item1 = dynamic_cast<Item*>(m_Parent->find(args[3], ITEM));
+			if (item1 == nullptr)
 			{
 				cout << "\nThere is no item here with that name.\n";
 				return false;
 			}
 		}
 
-		Item* item2 = (Item*)item1->find(args[1], ITEM);
+		Item* item2 = dynamic_cast<Item*>(m_Parent->find(args[1], ITEM));
 
 
-		if (item2 == NULL)
+		if (item2 == nullptr)
 		{
 			cout << "\nThere is no item here with that name.\n";
 			return false;

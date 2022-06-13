@@ -17,7 +17,7 @@ NPC::~NPC()
 {
 }
 
-void NPC::look() const
+void NPC::look(const vector<string>& args) const
 {
 	if (isAlive())
 	{

@@ -22,16 +22,17 @@ Room::~Room()
 
 void Room::look(const vector<string>& args) const
 {
+
 	cout << "\n" << m_Name << "\n";
 	cout << m_Description;
 
 	//NPCs
 
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
+		//NPCs
 		if ((*it)->m_Type == NPCAlly)
 		{
-			NPC* Npc = (NPC*)*it;
-			Npc->look();
+			(*it)->look(args);
 		}
 	}
 
@@ -40,8 +41,7 @@ void Room::look(const vector<string>& args) const
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		if ((*it)->m_Type == ITEM)
 		{
-			Item* item = (Item*)*it;
-			item->look(args);
+			(*it)->look(args);
 		}
 	}
 

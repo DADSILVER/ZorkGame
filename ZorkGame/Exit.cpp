@@ -16,7 +16,7 @@ Exit::~Exit()
 {
 }
 
-void Exit::look() const
+void Exit::look(const vector<string>& args) const
 {
 	cout << m_Name << " to " << m_OppositeName << "\n";
 	cout << m_Description << "\n";
