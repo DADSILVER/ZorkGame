@@ -198,6 +198,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "unequip") || same(args[0], "uneq"))
 		{
+			m_Player->unEquip(args);
 		}
 		else if (same(args[0], "examine") || same(args[0], "ex"))
 		{

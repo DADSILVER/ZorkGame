@@ -116,15 +116,29 @@ bool Creature::equip(const vector<string>& args)
 		return false;
 	}
 
-	if (item->m_ItemType = SKIN) 
+	if (item->m_ItemType == SKIN) 
 	{
-		cout << "\nItem " << m_Name << " equiped as skin.\n";
+		if (item == m_Skin)
+		{
+			cout << "\nThe object was equipped.\n";
+			return false;
+		}
+		cout << "\nItem " << m_Name << " equipped as skin.\n";
 		m_Skin = item;
+		m_MaxProtection += m_Skin->m_MaxValue;
+		m_MinProtection += m_Skin->m_MinValue;
 	}
-	else  if(item->m_ItemType = WEAPON)
+	else  if(item->m_ItemType == WEAPON)
 	{
-		cout << "\nItem " << m_Name << " equiped as weapon.\n";
+		if (item == m_Weapon)
+		{
+			cout << "\nThe object was equipped.\n";
+			return false;
+		}
+		cout << "\nItem " << m_Name << " equipped as weapon.\n";
 		m_Weapon = item;
+		m_MaxDamage += m_Weapon->m_MaxValue;
+		m_MinDamage += m_Weapon->m_MinValue;
 	}
 	else
 	{
@@ -133,6 +147,46 @@ bool Creature::equip(const vector<string>& args)
 	}
 
 	return true;
+}
+
+bool Creature::unEquip(const vector<string>& args)
+{
+	if (!isAlive())
+	{
+		return false;
+	}
+
+	Item* item = (Item*)this->find(args[1], ITEM);
+
+	if (item == NULL)
+	{
+		cout << "\nYou don't have this item.\n";
+		return false;
+	}
+
+	if (item == m_Weapon) 
+	{
+		cout << "\nItem " << m_Name << " unequipped as weapon.\n";
+		m_MaxDamage -= m_Weapon->m_MaxValue;
+		m_MinDamage -= m_Weapon->m_MinValue;
+		m_Weapon = NULL;
+		
+	}
+	else if (item == m_Skin) 
+	{
+		cout << "\nItem " << m_Name << " unequipped as weapon.\n";
+		m_MaxProtection -= m_Skin->m_MaxValue;
+		m_MinProtection -= m_Skin->m_MinValue;
+		m_Skin = NULL;
+		
+	}
+	else
+	{
+		cout << "\nYou don't have equiped this item.\n";
+		return false;
+	}
+	return true;
+
 }
 
 void Creature::tick()

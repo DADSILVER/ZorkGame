@@ -23,6 +23,8 @@ public:
     void look(const vector<string>& args) const;
 
 public:
+    int m_MinValue;
+    int m_MaxValue;
     ItemType m_ItemType;
 };
 

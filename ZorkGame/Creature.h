@@ -22,6 +22,7 @@ public:
 	virtual bool take(const vector<string>& args);
 	virtual bool drop(const vector<string>& args) const;
 	virtual bool equip(const vector<string>& args);
+	virtual bool unEquip(const vector<string>& args);
 	virtual void tick();
 	virtual void inventory() const;
 	virtual bool stats() const;
