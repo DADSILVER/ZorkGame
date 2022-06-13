@@ -22,6 +22,7 @@ public:
 	virtual bool drop(const vector<string>& args) const;
 	virtual void tick();
 	virtual void inventory() const;
+	virtual bool stats() const;
 	virtual bool unlock(const vector<string>& args) const;
 
 	Room* getRoom() const;

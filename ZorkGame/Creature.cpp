@@ -86,10 +86,27 @@ void Creature::inventory() const
 	}
 }
 
+bool Creature::stats() const
+{
+	if (!isAlive())
+	{
+		return false;
+	}
+
+	cout << "\n" << m_Name << " stats:\n";
+	cout << " Hit points: " << m_HitPoints <<"\n";
+	cout << " Damage: " << m_MaxDamage << " - "<< m_MinDamage << "\n";
+	cout << " Damage: " << m_MaxProtection << " - " << m_MinProtection << "\n";
+
+	return true;
+}
+
 bool Creature::unlock(const vector<string>& args) const
 {
 	if (!isAlive())
+	{
 		return false;
+	}
 
 	Exit* exit = getRoom()->getExit(args[1]);
 

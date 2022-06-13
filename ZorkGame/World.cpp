@@ -80,7 +80,8 @@ World::World()
 
 	// Add palyer
 	m_Player = new Player("Captian", "You are the captain of the place", cptRoom);
-	m_Player->m_HitPoints = 25;
+	m_Player->m_HitPoints = 30;
+	m_Player->m_MaxDamage = 3;
 	entities.push_back(m_Player);
 
 }
@@ -159,6 +160,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "stats") || same(args[0], "st"))
 		{
+			m_Player->stats();
 		}
 		else if (same(args[0], "inventory") || same(args[0], "i"))
 		{
