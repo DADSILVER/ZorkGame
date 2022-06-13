@@ -75,6 +75,11 @@ World::World()
 	Item* key = new Item("Cardkey", "Open restricted areas.", cptRoom,KEY);
 	hallWorkRoom->m_Key = key;
 
+	Item* boox = new Item("Boox", "there may be something inside.", workRoom, COMMON);
+	Item* knife = new Item("Knife", "can be used as a weapon.", boox, WEAPON);
+
+	Item* divingSuit = new Item("Diving-suit", "Needed to get out on the water. can be used as a skin.", workRoom, SKIN);
+
 	//Add NPCs
 	entities.push_back(key);
 
@@ -189,6 +194,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		else if (same(args[0], "equip") || same(args[0], "eq"))
 		{
+			m_Player->equip(args);
 		}
 		else if (same(args[0], "unequip") || same(args[0], "uneq"))
 		{

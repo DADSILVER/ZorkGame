@@ -20,7 +20,7 @@ Room::~Room()
 
 
 
-void Room::look() const
+void Room::look(const vector<string>& args) const
 {
 	cout << "\n" << m_Name << "\n";
 	cout << m_Description;
@@ -41,7 +41,7 @@ void Room::look() const
 		if ((*it)->m_Type == ITEM)
 		{
 			Item* item = (Item*)*it;
-			item->look();
+			item->look(args);
 		}
 	}
 

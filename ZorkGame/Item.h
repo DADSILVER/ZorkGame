@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 #include <string.h>
+#include <vector>
 
 using namespace std;
 
@@ -8,7 +9,8 @@ enum ItemType
 {
     KEY,
     WEAPON,
-    SKIN
+    SKIN,
+    COMMON
 };
 
 class Item :
@@ -18,7 +20,7 @@ public:
     Item(const char* name, const char* description, Entity* parent, ItemType itemType);
     ~Item();
 
-    void look() const;
+    void look(const vector<string>& args) const;
 
 public:
     ItemType m_ItemType;

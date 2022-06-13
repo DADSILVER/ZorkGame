@@ -59,17 +59,47 @@ void Player::talk(const vector<string>& args)
 	
 }
 
-void Player::take(const vector<string>& args)
+bool Player::take(const vector<string>& args)
 {
-	Item* item = (Item*)m_Parent->find(args[1], ITEM);
+	if (args.size() == 2)
+	{
+		Item* item = (Item*)m_Parent->find(args[1], ITEM);
 
-	if (item == NULL)
-	{
-		cout << "\nThere is no item here with that name.\n";
-	}else
-	{
+		if (item == NULL)
+		{
+			cout << "\nThere is no item here with that name.\n";
+			return false;
+		}
+
 		cout << "\nYou take " << args[1] << ".\n";
 		item->changeParentTo(this);
+		return true;
+	}
+	else
+	{
+		Item* item1 = (Item*)m_Parent->find(args[3], ITEM);
+		if (item1 == NULL)
+		{
+			item1 = (Item*)this->find(args[3], ITEM);
+			if (item1 == NULL)
+			{
+				cout << "\nThere is no item here with that name.\n";
+				return false;
+			}
+		}
+
+		Item* item2 = (Item*)item1->find(args[1], ITEM);
+
+
+		if (item2 == NULL)
+		{
+			cout << "\nThere is no item here with that name.\n";
+			return false;
+		}
+
+		cout << "\nYou take " << args[1] << " from " << args[3] << ".\n";
+		item2->changeParentTo(this);
+		return true;
 	}
 
 }

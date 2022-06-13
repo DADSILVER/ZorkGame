@@ -6,6 +6,7 @@
 
 
 class Room;
+class Item;
 
 using namespace std;
 
@@ -20,6 +21,7 @@ public:
 	virtual void look(const vector<string>& args) const;
 	virtual bool take(const vector<string>& args);
 	virtual bool drop(const vector<string>& args) const;
+	virtual bool equip(const vector<string>& args);
 	virtual void tick();
 	virtual void inventory() const;
 	virtual bool stats() const;
@@ -39,5 +41,7 @@ public:
 	int m_MaxProtection;
 	Creature* m_CombatTarget;
 
+	Item* m_Weapon;
+	Item* m_Skin;
 };
 

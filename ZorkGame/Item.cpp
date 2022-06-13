@@ -5,14 +5,14 @@ Item::Item(const char* name, const char* description, Entity* parent, ItemType i
 	Entity(name, description, parent)
 {
 	m_Type = ITEM;
-	m_ItemType = itemType;
+	m_ItemType = COMMON;
 }
 
 Item::~Item()
 {
 }
 
-void Item::look() const
+void Item::look(const vector<string>& args) const
 {
 	cout << "\n" << m_Name << ": ";
 	cout << m_Description << "\n";

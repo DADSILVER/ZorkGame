@@ -2,6 +2,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 class Exit;
 
@@ -15,7 +16,7 @@ class Room :
 		Room(const char* name, const char* description);
 		~Room();
 
-		void look() const;
+		void look(const vector<string>& args) const;
 		Exit* getExit(const string& direction) const;
 
 

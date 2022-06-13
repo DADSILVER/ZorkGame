@@ -13,7 +13,8 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 	m_HitPoints = 1;
 	m_MinDamage = m_MaxDamage = m_MinProtection = m_MaxProtection = 0;
 	m_CombatTarget = NULL;
-
+	m_Skin = NULL;
+	m_Weapon = NULL;
 }
 
 Creature::~Creature()
@@ -35,6 +36,11 @@ void Creature::look(const vector<string>& args) const
 
 bool Creature::take(const vector<string>& args)
 {
+	if (!isAlive())
+	{
+		return false;
+	}
+
 	if(args.size() == 2)
 	{
 		Item* item = (Item*)m_Parent->find(args[1], ITEM);
@@ -91,6 +97,40 @@ bool Creature::drop(const vector<string>& args) const
 
 	cout << "\nYou drop " << args[1] << ".\n";
 	item->changeParentTo(this->m_Parent);
+
+	return true;
+}
+
+bool Creature::equip(const vector<string>& args)
+{
+	if (!isAlive())
+	{
+		return false;
+	}
+
+	Item* item = (Item*)this->find(args[1], ITEM);
+
+	if (item == NULL)
+	{
+		cout << "\nYou don't have this item.\n";
+		return false;
+	}
+
+	if (item->m_ItemType = SKIN) 
+	{
+		cout << "\nItem " << m_Name << " equiped as skin.\n";
+		m_Skin = item;
+	}
+	else  if(item->m_ItemType = WEAPON)
+	{
+		cout << "\nItem " << m_Name << " equiped as weapon.\n";
+		m_Weapon = item;
+	}
+	else
+	{
+		cout << "\nYou can't equip this item.\n";
+		return false;
+	}
 
 	return true;
 }
