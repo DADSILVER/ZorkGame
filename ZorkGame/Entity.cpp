@@ -14,7 +14,7 @@ Entity::Entity(const char* name, const char* description, Entity* parent) :
 Entity::~Entity()
 {}
 
-void Entity::look() const
+void Entity::look(const vector<string>& args) const
 {
 	cout << m_Name << "\n";
 	cout << m_Description << "\n";

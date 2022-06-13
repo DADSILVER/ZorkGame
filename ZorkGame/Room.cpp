@@ -8,16 +8,16 @@
 #include "Item.h"
 
 
-Room::Room(const char* name, const char* description) :
+Room::Room(const char* name, const char* description, const RoomType roomType) :
 	Entity(name, description, NULL)
 {
 	m_Type = ROOM;
+	m_RoomType = roomType;
 }
 
 Room::~Room()
 {
 }
-
 
 
 void Room::look(const vector<string>& args) const

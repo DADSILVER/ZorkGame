@@ -14,15 +14,15 @@ World::World()
 {
 
 	// Create rooms
-	Room* cptRoom = new Room("Captain room", "You are in a little room.");
-	Room* hall = new Room("Hall", "You are in a big room.");
-	Room* crewRoom = new Room("Crew room", "You are in a little room.");
-	Room* workRoom = new Room("Work room", "You are in Work room.");
-	Room* chD1 = new Room("Depressurization chamber A1", "You are in Depressurization chamber A1.");
-	Room* ocean1 = new Room("Ocean", "It's very dark you can't see anything.");
+	Room* cptRoom = new Room("Captain room", "You are in a little room.", RoomType::NORMAL);
+	Room* hall = new Room("Hall", "You are in a big room.", RoomType::NORMAL);
+	Room* crewRoom = new Room("Crew room", "You are in a little room.", RoomType::NORMAL);
+	Room* workRoom = new Room("Work room", "You are in Work room.", RoomType::NORMAL);
+	Room* chD1 = new Room("Depressurization chamber A1", "You are in Depressurization chamber A1.", RoomType::NORMAL);
+	Room* ocean1 = new Room("Ocean", "It's very dark you can't see anything.", RoomType::OCEAN);
 	//Room* room7 = new Room("Ocean", "It's very dark you can't see anything.");
-	Room* chD2 = new Room("Depressurization chamber A2", "You are in Depressurization chamber A2.");
-	Room* infirmary = new Room("Infirmary", "You are in infirmary.");
+	Room* chD2 = new Room("Depressurization chamber A2", "You are in Depressurization chamber A2.", RoomType::NORMAL);
+	Room* infirmary = new Room("Infirmary", "You are in infirmary.", RoomType::NORMAL);
 
 	//Add rooms
 	entities.push_back(cptRoom);
@@ -42,10 +42,9 @@ World::World()
 	Exit* hallWorkRoom = new Exit("west", "east", "Little path", hall, workRoom);
 	hallWorkRoom->m_Locked = true;
 	Exit* hallChD1 = new Exit("east", "west", "Door", hall, chD1);
-	Exit* ocenaChD1 = new Exit("east", "west", "Robust door", ocean1, chD1);
-	ocenaChD1->m_Locked = true;
-	Exit* ocenaChD2 = new Exit("east", "west", "Robust door", ocean1, chD2);
-	Exit* infirmaryChD2 = new Exit("east", "west", "Little path", infirmary, chD2);
+	Exit* ocenaChD1 = new Exit("west", "east", "Robust door", ocean1, chD1);
+	Exit* ocenaChD2 = new Exit("north", "south", "Robust door", ocean1, chD2);
+	Exit* infirmaryChD2 = new Exit("south", "north", "Little path", infirmary, chD2);
 	infirmaryChD2->m_Locked = true;
 
 	//Add Exits
@@ -72,13 +71,18 @@ World::World()
 
 
 	// Create Items
-	Item* key = new Item("Cardkey", "Open restricted areas.", cptRoom,KEY);
+	Item* key = new Item("Cardkey", "Open restricted areas.", cptRoom, ItemType::KEY);
 	hallWorkRoom->m_Key = key;
+	Item* box = new Item("Box", "there may be something inside.", workRoom, ItemType::COMMON);
+	Item* knife = new Item("Knife", "can be used as a weapon.", box, ItemType::WEAPON);
+	knife->m_MaxValue = 4;
+	knife->m_MinValue = 3;
+	Item* divingSuit = new Item("Diving-suit", "Needed to get out on the water. can be used as a skin.", workRoom, ItemType::SKIN);
+	divingSuit->m_MaxValue = 2;
+	divingSuit->m_MinValue = 2;
+	Item* headLantern = new Item("headlantern", "You can use as helmet to see in the drakness.", crewRoom, ItemType::LANTERN);
 
-	Item* boox = new Item("Boox", "there may be something inside.", workRoom, COMMON);
-	Item* knife = new Item("Knife", "can be used as a weapon.", boox, WEAPON);
 
-	Item* divingSuit = new Item("Diving-suit", "Needed to get out on the water. can be used as a skin.", workRoom, SKIN);
 
 	//Add NPCs
 	entities.push_back(key);

@@ -5,12 +5,13 @@
 
 using namespace std;
 
-enum ItemType
+enum class ItemType
 {
     KEY,
     WEAPON,
     SKIN,
-    COMMON
+    COMMON,
+    LANTERN
 };
 
 class Item :

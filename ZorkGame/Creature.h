@@ -20,7 +20,7 @@ public:
 	virtual bool go(const vector<string>& args);
 	virtual void look(const vector<string>& args) const;
 	virtual bool take(const vector<string>& args);
-	virtual bool drop(const vector<string>& args) const;
+	virtual bool drop(const vector<string>& args);
 	virtual bool equip(const vector<string>& args);
 	virtual bool unEquip(const vector<string>& args);
 	virtual void tick();
@@ -44,5 +44,6 @@ public:
 
 	Item* m_Weapon;
 	Item* m_Skin;
+	Item* m_Helmet;
 };
 

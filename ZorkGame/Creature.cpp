@@ -12,13 +12,32 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 	m_Type = CREATURE;
 	m_HitPoints = 1;
 	m_MinDamage = m_MaxDamage = m_MinProtection = m_MaxProtection = 0;
-	m_CombatTarget = NULL;
-	m_Skin = NULL;
-	m_Weapon = NULL;
+	m_CombatTarget = nullptr;
+	m_Skin = nullptr;
+	m_Weapon = nullptr;
+	m_Helmet = nullptr;
 }
 
 Creature::~Creature()
 {}
+
+bool Creature::go(const vector<string>& args)
+{
+	if (!isAlive())
+		return false;
+
+	Exit* exit = getRoom()->getExit(args[1]);
+
+	if (exit == NULL)
+		return false;
+
+	if (playerInRoom())
+		cout << m_Name << "goes " << args[1] << "...\n";
+
+	changeParentTo(exit->getDestinationFrom((Room*)m_Parent));
+
+	return true;
+}
 
 void Creature::look(const vector<string>& args) const
 {
@@ -85,7 +104,7 @@ bool Creature::take(const vector<string>& args)
 	
 }
 
-bool Creature::drop(const vector<string>& args) const
+bool Creature::drop(const vector<string>& args)
 {
 	Item* item = (Item*)this->find(args[1], ITEM);
 
@@ -96,6 +115,23 @@ bool Creature::drop(const vector<string>& args) const
 	}
 
 	cout << "\nYou drop " << args[1] << ".\n";
+
+	if (item == m_Helmet)
+	{
+		m_Helmet = nullptr;
+	}
+	else if (item == m_Weapon)
+	{
+		m_MaxDamage += m_Weapon->m_MaxValue;
+		m_MinDamage += m_Weapon->m_MinValue;
+		m_Weapon = nullptr;
+	}
+	else if (item == m_Skin)
+	{
+		m_MaxDamage += m_Skin->m_MaxValue;
+		m_MinDamage += m_Skin->m_MinValue;
+		m_Skin = nullptr;
+	}
 	item->changeParentTo(this->m_Parent);
 
 	return true;
@@ -110,13 +146,13 @@ bool Creature::equip(const vector<string>& args)
 
 	Item* item = (Item*)this->find(args[1], ITEM);
 
-	if (item == NULL)
+	if (item == nullptr)
 	{
 		cout << "\nYou don't have this item.\n";
 		return false;
 	}
 
-	if (item->m_ItemType == SKIN) 
+	if (item->m_ItemType == ItemType::SKIN)
 	{
 		if (item == m_Skin)
 		{
@@ -128,7 +164,7 @@ bool Creature::equip(const vector<string>& args)
 		m_MaxProtection += m_Skin->m_MaxValue;
 		m_MinProtection += m_Skin->m_MinValue;
 	}
-	else  if(item->m_ItemType == WEAPON)
+	else  if(item->m_ItemType == ItemType::WEAPON)
 	{
 		if (item == m_Weapon)
 		{
@@ -306,24 +342,6 @@ bool Creature::lock(const vector<string>& args) const
 	cout << "\nYou lock " << exit->getNameFrom((Room*)m_Parent) << "...\n";
 
 	exit->m_Locked = true;
-
-	return true;
-}
-
-bool Creature::go(const vector<string>& args)
-{
-	if (!isAlive())
-		return false;
-
-	Exit* exit = getRoom()->getExit(args[1]);
-
-	if (exit == NULL)
-		return false;
-
-	if (playerInRoom())
-		cout << m_Name << "goes " << args[1] << "...\n";
-
-	changeParentTo(exit->getDestinationFrom((Room*)m_Parent));
 
 	return true;
 }

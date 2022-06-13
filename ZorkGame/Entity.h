@@ -2,6 +2,7 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 
 using namespace std;
@@ -24,7 +25,7 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 		virtual ~Entity();
 
-		virtual void look() const;
+		virtual void look(const vector<string>& args) const;
 
 		virtual void tick();
 

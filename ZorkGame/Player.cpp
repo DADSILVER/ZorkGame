@@ -19,7 +19,7 @@ void Player::look(const vector<string>& args)
 {
 	cout << "\n" << m_Name << "\n";
 	cout << m_Description << "\n";
-	m_Parent->look();
+	m_Parent->look(args);
 }
 
 bool Player::go(const vector<string>& args)
@@ -37,9 +37,14 @@ bool Player::go(const vector<string>& args)
 		return false;
 	}
 
+	if ((exit->m_Destination->m_RoomType == RoomType::OCEAN || ((Room*)exit->m_Parent)->m_RoomType == RoomType::OCEAN) && m_Skin==nullptr) {
+		cout << "\nYou need equip a diving suit.\n";
+		return false;
+	}
+
 	cout << "\nYou take direction " << exit->getNameFrom((Room*)m_Parent) << "...\n";
 	changeParentTo(exit->getDestinationFrom((Room*)m_Parent));
-	m_Parent->look();
+	m_Parent->look(args);
 
 	return true;
 }
