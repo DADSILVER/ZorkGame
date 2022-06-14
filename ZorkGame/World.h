@@ -25,6 +25,7 @@ public:
 	bool Tick(vector<string>& args);
 	bool ParseCommand(vector<string>& args);
 	void GameLoop();
+	bool IsGameFinished();
 
 private:
 

@@ -11,7 +11,8 @@ enum class ItemType
     WEAPON,
     SKIN,
     COMMON,
-    LANTERN
+    LANTERN,
+    CONTAINER
 };
 
 class Item :

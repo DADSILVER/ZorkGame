@@ -7,7 +7,7 @@
 #include "globals.h"
 
 Player::Player(const char* name, const char* description, Room* room):
-Creature(name, description, room), m_InvalidAction(false), m_LastMove("back")
+Creature(name, description, room,0), m_InvalidAction(false), m_LastMove("back")
 {
 	m_Type = PLAYER;
 }
@@ -185,13 +185,22 @@ void Player::Tick()
 
 	if (m_CombatTarget != nullptr) {
 		if (m_Parent->Find(m_CombatTarget) == true)
+		{
 			MakeAttack();
+		}
 		else
-			m_CombatTarget = NULL;
+		{
+			m_CombatTarget = nullptr;
+		}
 	}
 }
 
-bool Player::CanDoAction(const vector<string>& args)
+void Player::Died() const
+{
+	cout << m_Name << " dies.\n";
+}
+
+bool Player::CanDoAction(const vector<string>& args) const
 {
 	if (dynamic_cast<Room*>(m_Parent)->m_RoomType == RoomType::OCEAN)
 	{
@@ -201,15 +210,13 @@ bool Player::CanDoAction(const vector<string>& args)
 			{
 				if (!(Same(args[0], "back") || Same(args[0], "b")))
 				{
-					m_InvalidAction = true;
 					return false;
 				}
 			}
 			else if(args.size() == 2)
 			{
 				if (!(Same(args[0], "go") || Same(args[1], "back")))
-				{
-					m_InvalidAction = true;
+				{	
 					return false;
 				}
 			}
@@ -219,9 +226,10 @@ bool Player::CanDoAction(const vector<string>& args)
 	return true;
 }
 
-bool Player::DontSee() const
+
+bool Player::CantSee()
 {
-	//m_Player->look(args);
+	m_InvalidAction = true;
 	cout << "\nIt's very dark you can't see anything.\n";
 	cout << "\nSomething hit you.\n";
 	cout << "You should go back.\n";

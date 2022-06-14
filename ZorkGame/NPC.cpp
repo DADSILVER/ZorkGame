@@ -3,7 +3,7 @@
 
 
 NPC::NPC(const char* name, const char* description, Room* room):
-	Creature(name, description, room)
+	Creature(name, description, room,0)
 {
 	m_Type = NPCAlly;
 	

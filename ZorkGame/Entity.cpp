@@ -71,7 +71,6 @@ Entity* Entity::Find(const string& name, EntityType type) const
 	return NULL;
 }
 
-
 void Entity::FindAll(EntityType type, list<Entity*>& list_to_fill) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)

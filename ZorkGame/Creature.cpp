@@ -91,7 +91,7 @@ bool Creature::Take(const vector<string>& args)
 	{
 		Item* item = (Item*)m_Parent->Find(args[1], ITEM);
 
-		if (item == NULL)
+		if (item == nullptr)
 		{
 			cout << "\nThere is no item here with that name.\n";
 			return false;
@@ -104,10 +104,10 @@ bool Creature::Take(const vector<string>& args)
 	else
 	{
 		Item* item1 = (Item*)m_Parent->Find(args[3], ITEM);
-		if (item1 == NULL)
+		if (item1 == nullptr)
 		{
 			item1 = (Item*)this->Find(args[3], ITEM);
-			if (item1 == NULL)
+			if (item1 == nullptr)
 			{
 				cout << "\nThere is no item here with that name.\n";
 				return false;
@@ -117,7 +117,7 @@ bool Creature::Take(const vector<string>& args)
 		Item* item2 = (Item*)item1->Find(args[1], ITEM);
 
 
-		if (item2 == NULL)
+		if (item2 == nullptr)
 		{
 			cout << "\nThere is no item here with that name.\n";
 			return false;
@@ -133,35 +133,85 @@ bool Creature::Take(const vector<string>& args)
 
 bool Creature::Drop(const vector<string>& args)
 {
-	Item* item = (Item*)this->Find(args[1], ITEM);
-
-	if (item == NULL || item->m_Parent != this)
+	if (args.size() == 2) 
 	{
-		cout << "\nYou don't have this item.\n";
-		return false;
-	}
+		Item* item = (Item*)this->Find(args[1], ITEM);
 
-	cout << "\nYou drop " << args[1] << ".\n";
+		if (item == NULL || item->m_Parent != this)
+		{
+			cout << "\nYou don't have this item.\n";
+			return false;
+		}
 
-	if (item == m_Helmet)
-	{
-		m_Helmet = nullptr;
-	}
-	else if (item == m_Weapon)
-	{
-		m_MaxDamage -= m_Weapon->m_MaxValue;
-		m_MinDamage -= m_Weapon->m_MinValue;
-		m_Weapon = nullptr;
-	}
-	else if (item == m_Skin)
-	{
-		m_MaxDamage -= m_Skin->m_MaxValue;
-		m_MinDamage -= m_Skin->m_MinValue;
-		m_Skin = nullptr;
-	}
-	item->ChangeParentTo(this->m_Parent);
+		cout << "\nYou drop " << args[1] << ".\n";
 
-	return true;
+		if (item == m_Helmet)
+		{
+			m_Helmet = nullptr;
+		}
+		else if (item == m_Weapon)
+		{
+			m_MaxDamage -= m_Weapon->m_MaxValue;
+			m_MinDamage -= m_Weapon->m_MinValue;
+			m_Weapon = nullptr;
+		}
+		else if (item == m_Skin)
+		{
+			m_MaxDamage -= m_Skin->m_MaxValue;
+			m_MinDamage -= m_Skin->m_MinValue;
+			m_Skin = nullptr;
+		}
+		item->ChangeParentTo(this->m_Parent);
+
+		return true;
+	}
+	else
+	{
+		Item* item1 = dynamic_cast<Item*>( m_Parent->Find(args[3], ITEM));
+		if (item1 == nullptr)
+		{
+			item1 = dynamic_cast<Item*>(Find(args[3], ITEM));
+			if (item1 == nullptr)
+			{
+				cout << "\nThere is no item here with that name.\n";
+				return false;
+			}
+		}
+
+		if (item1->m_ItemType != ItemType::CONTAINER)
+		{
+			cout << "\nYou can't drop items here.\n";
+			return false;
+		}
+
+		Entity* item2 = Find(args[1], ITEM);
+
+		if (item2 == nullptr)
+		{
+			cout << "\nThere is no item here with that name.\n";
+			return false;
+		}
+
+		cout << "\nYou drop " << args[1] << " in " << args[3] << ".\n";
+		if (item2 == m_Helmet)
+		{
+			m_Helmet = nullptr;
+		}
+		else if (item2 == m_Weapon)
+		{
+			m_MaxDamage -= m_Weapon->m_MaxValue;
+			m_MinDamage -= m_Weapon->m_MinValue;
+			m_Weapon = nullptr;
+		}
+		else if (item2 == m_Skin)
+		{
+			m_MaxDamage -= m_Skin->m_MaxValue;
+			m_MinDamage -= m_Skin->m_MinValue;
+			m_Skin = nullptr;
+		}
+		item2->ChangeParentTo(item1);
+	}
+	
 }
 
 bool Creature::Equip(const vector<string>& args)
@@ -452,6 +502,11 @@ int Creature::MakeAttack()
 	}
 }
 
+void Creature::Died() const
+{
+	cout << m_Name << " dies.\n>";
+}
+
 bool Creature::Loot(const vector<string>& args)
 {
 	Creature* target = dynamic_cast<Creature*>(m_Parent->Find(args[1], CREATURE));
@@ -505,11 +560,13 @@ int Creature::ReceiveAttack(int damage)
 
 	if (IsAlive() == false)
 	{
-		cout << m_Name << " dies.\n>";
+		Died();
 	}
 
 	return received;
 }
+
+
 
 void Creature::DoDamage(int dmg)
 {

@@ -47,6 +47,11 @@ int main()
 				Tokenize(player_input, args);
 		}
 
+		if (myWorld.IsGameFinished()) 
+		{
+			break;
+		}
+
 		if (args.size() > 0 && Same(args[0], "quit"))
 			break;
 

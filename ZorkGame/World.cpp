@@ -78,9 +78,10 @@ World::World()
 	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary, 5);
 	stranger->m_HitPoints = 14;
 	stranger->m_MaxDamage = 2;
-	Creature* eel = new Creature("Eel", "can be aggressive", ocean1,30);
-	eel->m_HitPoints = 10;
-	eel->m_MaxDamage = 2;
+	Creature* eel = new Creature("Eel", "can be aggressive", hall
+		,30);
+	eel->m_HitPoints = 100;
+	eel->m_MaxDamage = 100;
 	
 
 	//Add NPCs
@@ -91,7 +92,7 @@ World::World()
 	// Create Items
 	Item* key = new Item("Cardkey", "Open restricted areas.", cptRoom, ItemType::KEY);
 	hallWorkRoom->m_Key = key;
-	Item* box = new Item("Box", "there may be something inside.", workRoom, ItemType::COMMON);
+	Item* box = new Item("Box", "there may be something inside.", workRoom, ItemType::CONTAINER);
 	Item* knife = new Item("Knife", "can be used as a weapon.", box, ItemType::WEAPON);
 	knife->m_MaxValue = 4;
 	knife->m_MinValue = 3;
@@ -108,6 +109,7 @@ World::World()
 	m_Entities.push_back(knife);
 	m_Entities.push_back(divingSuit);
 	m_Entities.push_back(headLantern);
+	m_Entities.push_back(bandages);
 
 	// Add palyer
 	m_Player = new Player("Captian", "You are the captain of the place.", cptRoom);
@@ -131,11 +133,6 @@ World::~World()
 bool World::Tick(vector<string>& args)
 {
 	bool ret = true;
-	if (!m_Player->IsAlive())
-	{
-		//args.clear();
-		//args.push_back("quit");
-	}
 
 	if (args.size() > 0 && args[0].length() > 0)
 	{
@@ -162,12 +159,21 @@ void World::GameLoop()
 	}
 }
 
+bool World::IsGameFinished()
+{
+	if (!m_Player->IsAlive())
+	{		
+		return true;
+	}
+	return false;
+}
+
 bool World::ParseCommand(vector<string>& args)
 {
 	bool ret = true;
 	if (!m_Player->CanDoAction(args))
 	{
-		return m_Player->DontSee();			
+		return m_Player->CantSee();			
 	}
 	switch (args.size())
 	{
@@ -282,7 +288,7 @@ bool World::ParseCommand(vector<string>& args)
 			}
 			else if (Same(args[0], "drop") || Same(args[0], "put"))
 			{
-
+				m_Player->Drop(args);
 			}
 			else
 				ret = false;

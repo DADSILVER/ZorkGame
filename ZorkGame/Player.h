@@ -17,8 +17,9 @@ public:
 	void Look(const vector<string>& args) const override;
 	bool Take(const vector<string>& args) override;
 	void Tick() override;
-	virtual bool CanDoAction(const vector<string>& args);
-	virtual bool DontSee() const;
+	void Died() const override;
+	virtual bool CanDoAction(const vector<string>& args) const;
+	virtual bool CantSee();
 	
 
 public:
