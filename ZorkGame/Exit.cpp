@@ -16,13 +16,13 @@ Exit::~Exit()
 {
 }
 
-void Exit::look(const vector<string>& args) const
+void Exit::Look(const vector<string>& args) const
 {
 	cout << m_Name << " to " << m_OppositeName << "\n";
 	cout << m_Description << "\n";
 }
 
-const string& Exit::getNameFrom(const Room* room) const
+const string& Exit::GetNameFrom(const Room* room) const
 {
 	if (room == m_Parent)
 		return m_Name;
@@ -32,7 +32,7 @@ const string& Exit::getNameFrom(const Room* room) const
 	return m_Name;
 }
 
-Room* Exit::getDestinationFrom(const Room* room) const
+Room* Exit::GetDestinationFrom(const Room* room) const
 {
 	if (room == m_Parent)
 		return m_Destination;

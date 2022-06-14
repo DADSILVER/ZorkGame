@@ -21,27 +21,27 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 Creature::~Creature()
 {}
 
-bool Creature::go(const vector<string>& args)
+bool Creature::Go(const vector<string>& args)
 {
-	if (!isAlive())
+	if (!IsAlive())
 		return false;
 
-	Exit* exit = getRoom()->getExit(args[1]);
+	Exit* exit = GetRoom()->GetExit(args[1]);
 
 	if (exit == NULL)
 		return false;
 
-	if (playerInRoom())
+	if (PlayerInRoom())
 		cout << m_Name << "goes " << args[1] << "...\n";
 
-	changeParentTo(exit->getDestinationFrom((Room*)m_Parent));
+	ChangeParentTo(exit->GetDestinationFrom((Room*)m_Parent));
 
 	return true;
 }
 
-void Creature::look(const vector<string>& args) const
+void Creature::Look(const vector<string>& args) const
 {
-	if (isAlive())
+	if (IsAlive())
 	{
 		cout << m_Name << "\n";
 		cout << m_Description << "\n";
@@ -53,16 +53,16 @@ void Creature::look(const vector<string>& args) const
 	}
 }
 
-bool Creature::take(const vector<string>& args)
+bool Creature::Take(const vector<string>& args)
 {
-	if (!isAlive())
+	if (!IsAlive())
 	{
 		return false;
 	}
 
 	if(args.size() == 2)
 	{
-		Item* item = (Item*)m_Parent->find(args[1], ITEM);
+		Item* item = (Item*)m_Parent->Find(args[1], ITEM);
 
 		if (item == NULL)
 		{
@@ -71,15 +71,15 @@ bool Creature::take(const vector<string>& args)
 		}
 
 		cout << "\nYou take " << args[1] << ".\n";
-		item->changeParentTo(this);
+		item->ChangeParentTo(this);
 		return true;
 	}
 	else
 	{
-		Item* item1 = (Item*)m_Parent->find(args[3], ITEM);
+		Item* item1 = (Item*)m_Parent->Find(args[3], ITEM);
 		if (item1 == NULL)
 		{
-			item1 = (Item*)this->find(args[3], ITEM);
+			item1 = (Item*)this->Find(args[3], ITEM);
 			if (item1 == NULL)
 			{
 				cout << "\nThere is no item here with that name.\n";
@@ -87,7 +87,7 @@ bool Creature::take(const vector<string>& args)
 			}
 		}	
 
-		Item* item2 = (Item*)item1->find(args[1], ITEM);
+		Item* item2 = (Item*)item1->Find(args[1], ITEM);
 
 
 		if (item2 == NULL)
@@ -97,16 +97,16 @@ bool Creature::take(const vector<string>& args)
 		}
 
 		cout << "\nYou take " << args[1] << " from " << args[3] <<".\n";
-		item2->changeParentTo(this);
+		item2->ChangeParentTo(this);
 		return true;
 	}
 
 	
 }
 
-bool Creature::drop(const vector<string>& args)
+bool Creature::Drop(const vector<string>& args)
 {
-	Item* item = (Item*)this->find(args[1], ITEM);
+	Item* item = (Item*)this->Find(args[1], ITEM);
 
 	if (item == NULL || item->m_Parent != this)
 	{
@@ -132,19 +132,19 @@ bool Creature::drop(const vector<string>& args)
 		m_MinDamage -= m_Skin->m_MinValue;
 		m_Skin = nullptr;
 	}
-	item->changeParentTo(this->m_Parent);
+	item->ChangeParentTo(this->m_Parent);
 
 	return true;
 }
 
-bool Creature::equip(const vector<string>& args)
+bool Creature::Equip(const vector<string>& args)
 {
-	if (!isAlive())
+	if (!IsAlive())
 	{
 		return false;
 	}
 
-	Item* item = (Item*)this->find(args[1], ITEM);
+	Item* item = (Item*)this->Find(args[1], ITEM);
 
 	if (item == nullptr)
 	{
@@ -198,14 +198,14 @@ bool Creature::equip(const vector<string>& args)
 	return true;
 }
 
-bool Creature::unEquip(const vector<string>& args)
+bool Creature::UnEquip(const vector<string>& args)
 {
-	if (!isAlive())
+	if (!IsAlive())
 	{
 		return false;
 	}
 
-	Item* item = (Item*)this->find(args[1], ITEM);
+	Item* item = (Item*)this->Find(args[1], ITEM);
 
 	if (item == NULL)
 	{
@@ -238,14 +238,14 @@ bool Creature::unEquip(const vector<string>& args)
 
 }
 
-void Creature::tick()
+void Creature::Tick()
 {
 }
 
-void Creature::inventory() const
+void Creature::Inventory() const
 {
 	list<Entity*> items;
-	findAll(ITEM, items);
+	FindAll(ITEM, items);
 
 	if (items.size() == 0)
 	{
@@ -260,9 +260,9 @@ void Creature::inventory() const
 	}
 }
 
-bool Creature::stats() const
+bool Creature::Stats() const
 {
-	if (!isAlive())
+	if (!IsAlive())
 	{
 		return false;
 	}
@@ -275,14 +275,14 @@ bool Creature::stats() const
 	return true;
 }
 
-bool Creature::unlock(const vector<string>& args) const
+bool Creature::Unlock(const vector<string>& args) const
 {
-	if (!isAlive())
+	if (!IsAlive())
 	{
 		return false;
 	}
 
-	Exit* exit = getRoom()->getExit(args[1]);
+	Exit* exit = GetRoom()->GetExit(args[1]);
 
 	if (exit == NULL)
 	{
@@ -296,7 +296,7 @@ bool Creature::unlock(const vector<string>& args) const
 		return false;
 	}
 
-	Item* item = (Item*)find(args[3], ITEM);
+	Item* item = (Item*)Find(args[3], ITEM);
 
 	if (item == NULL)
 	{
@@ -306,25 +306,25 @@ bool Creature::unlock(const vector<string>& args) const
 
 	if (exit->m_Key != item)
 	{
-		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->getNameFrom((Room*)m_Parent) << ".\n";
+		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->GetNameFrom((Room*)m_Parent) << ".\n";
 		return false;
 	}
 
-	cout << "\nYou unlock " << exit->getNameFrom((Room*)m_Parent) << "...\n";
+	cout << "\nYou unlock " << exit->GetNameFrom((Room*)m_Parent) << "...\n";
 
 	exit->m_Locked = false;
 
 	return true;
 }
 
-bool Creature::lock(const vector<string>& args) const
+bool Creature::Lock(const vector<string>& args) const
 {
-	if (!isAlive())
+	if (!IsAlive())
 	{
 		return false;
 	}
 
-	Exit* exit = getRoom()->getExit(args[1]);
+	Exit* exit = GetRoom()->GetExit(args[1]);
 
 	if (exit == NULL)
 	{
@@ -338,7 +338,7 @@ bool Creature::lock(const vector<string>& args) const
 		return false;
 	}
 
-	Item* item = (Item*)find(args[3], ITEM);
+	Item* item = (Item*)Find(args[3], ITEM);
 
 	if (item == NULL)
 	{
@@ -348,28 +348,28 @@ bool Creature::lock(const vector<string>& args) const
 
 	if (exit->m_Key != item)
 	{
-		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->getNameFrom((Room*)m_Parent) << ".\n";
+		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->GetNameFrom((Room*)m_Parent) << ".\n";
 		return false;
 	}
 
-	cout << "\nYou lock " << exit->getNameFrom((Room*)m_Parent) << "...\n";
+	cout << "\nYou lock " << exit->GetNameFrom((Room*)m_Parent) << "...\n";
 
 	exit->m_Locked = true;
 
 	return true;
 }
 
-Room* Creature::getRoom() const
+Room* Creature::GetRoom() const
 {
 	return (Room*)m_Parent;
 }
 
-bool Creature::playerInRoom() const
+bool Creature::PlayerInRoom() const
 {
-	return m_Parent->find(PLAYER) != NULL;
+	return m_Parent->Find(PLAYER) != NULL;
 }
 
-bool Creature::isAlive() const
+bool Creature::IsAlive() const
 {
 	return m_HitPoints > 0;
 }

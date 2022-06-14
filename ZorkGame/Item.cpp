@@ -14,13 +14,13 @@ Item::~Item()
 {
 }
 
-void Item::look(const vector<string>& args) const
+void Item::Look(const vector<string>& args) const
 {
 	cout << "\n" << m_Name << ": ";
 	cout << m_Description << "\n";
 
 	list<Entity*> stuff;
-	findAll(ITEM, stuff);
+	FindAll(ITEM, stuff);
 
 	if (stuff.size() > 0)
 	{

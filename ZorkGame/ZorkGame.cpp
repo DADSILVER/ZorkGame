@@ -44,10 +44,10 @@ int main()
 				cout << key;
 			}
 			else
-				tokenize(player_input, args);
+				Tokenize(player_input, args);
 		}
 
-		if (args.size() > 0 && same(args[0], "quit"))
+		if (args.size() > 0 && Same(args[0], "quit"))
 			break;
 
 		if (myWorld.Tick(args) == false)

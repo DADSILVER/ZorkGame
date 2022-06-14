@@ -3,11 +3,11 @@
 
 using namespace std;
 
-bool same(const string& a, const string& b);
-bool same(const char* a, const string& b);
-bool same(const string& a, const char* b);
-int roll(int min, int max);
-void tokenize(const string& line, vector<string>& arguments);
+bool Same(const string& a, const string& b);
+bool Same(const char* a, const string& b);
+bool Same(const string& a, const char* b);
+int Roll(int min, int max);
+void Tokenize(const string& line, vector<string>& arguments);
 
 
 

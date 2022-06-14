@@ -20,7 +20,7 @@ Room::~Room()
 }
 
 
-void Room::look(const vector<string>& args) const
+void Room::Look(const vector<string>& args) const
 {
 
 	cout << "\n" << m_Name << "\n";
@@ -32,7 +32,7 @@ void Room::look(const vector<string>& args) const
 		//NPCs
 		if ((*it)->m_Type == NPCAlly)
 		{
-			(*it)->look(args);
+			(*it)->Look(args);
 		}
 	}
 
@@ -41,7 +41,7 @@ void Room::look(const vector<string>& args) const
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		if ((*it)->m_Type == ITEM)
 		{
-			(*it)->look(args);
+			(*it)->Look(args);
 		}
 	}
 
@@ -51,7 +51,7 @@ void Room::look(const vector<string>& args) const
 		if ((*it)->m_Type == EXIT)
 		{
 			Exit* ex = (Exit*)*it;
-			cout << "\nDirection (" << ex->getNameFrom(this) << ") you see " << ex->getDestinationFrom(this)->m_Name;
+			cout << "\nDirection (" << ex->GetNameFrom(this) << ") you see " << ex->GetDestinationFrom(this)->m_Name;
 		}
 	}
 
@@ -60,14 +60,14 @@ void Room::look(const vector<string>& args) const
 
 }
 
-Exit* Room::getExit(const string& direction) const
+Exit* Room::GetExit(const string& direction) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); it++)
 	{
 		if ((*it)->m_Type == EXIT)
 		{
 			Exit* ex = (Exit*)*it;
-			if (same(ex->getNameFrom(this), direction))
+			if (Same(ex->GetNameFrom(this), direction))
 				return ex;
 		}
 	}

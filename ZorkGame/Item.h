@@ -21,7 +21,7 @@ public:
     Item(const char* name, const char* description, Entity* parent, ItemType itemType);
     ~Item();
 
-    void look(const vector<string>& args) const;
+    void Look(const vector<string>& args) const override;
 
 public:
     int m_MinValue;

@@ -14,16 +14,16 @@ Entity::Entity(const char* name, const char* description, Entity* parent) :
 Entity::~Entity()
 {}
 
-void Entity::look(const vector<string>& args) const
+void Entity::Look(const vector<string>& args) const
 {
 	cout << m_Name << "\n";
 	cout << m_Description << "\n";
 }
 
-void Entity::tick()
+void Entity::Tick()
 {}
 
-void Entity::changeParentTo(Entity * newParent)
+void Entity::ChangeParentTo(Entity * newParent)
 {
 	if (m_Parent != NULL)
 		m_Parent->m_Contains.remove(this);
@@ -34,7 +34,7 @@ void Entity::changeParentTo(Entity * newParent)
 		m_Parent->m_Contains.push_back(this);
 }
 
-Entity* Entity::find(EntityType type) const
+Entity* Entity::Find(EntityType type) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
 	{
@@ -46,11 +46,11 @@ Entity* Entity::find(EntityType type) const
 	return NULL;
 }
 
-Entity* Entity::find(const string& name, EntityType type) const
+Entity* Entity::Find(const string& name, EntityType type) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
 	{
-		if ((*it)->m_Type == type && same((*it)->m_Name,name))
+		if ((*it)->m_Type == type && Same((*it)->m_Name,name))
 		{
 			return *it;
 		}
@@ -59,7 +59,7 @@ Entity* Entity::find(const string& name, EntityType type) const
 }
 
 
-void Entity::findAll(EntityType type, list<Entity*>& list_to_fill) const
+void Entity::FindAll(EntityType type, list<Entity*>& list_to_fill) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
 	{

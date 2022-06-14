@@ -21,8 +21,8 @@ class Room :
 		Room(const char* name, const char* description, RoomType roomType);
 		~Room();
 
-		void look(const vector<string>& args) const;
-		Exit* getExit(const string& direction) const;
+		void Look(const vector<string>& args) const override;
+		Exit* GetExit(const string& direction) const;
 
 
 public:

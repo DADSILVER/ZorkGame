@@ -17,9 +17,9 @@ NPC::~NPC()
 {
 }
 
-void NPC::look(const vector<string>& args) const
+void NPC::Look(const vector<string>& args) const
 {
-	if (isAlive())
+	if (IsAlive())
 	{
 		cout << m_Name << "\n";
 		cout << m_Description << "\n";

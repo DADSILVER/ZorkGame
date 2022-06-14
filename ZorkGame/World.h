@@ -29,7 +29,7 @@ public:
 private:
 
 	clock_t tick_timer;
-	list<Entity*> entities;
+	list<Entity*> m_Entities;
 	Player* m_Player;
 	
 };

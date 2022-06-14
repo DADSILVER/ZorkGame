@@ -25,15 +25,14 @@ class Entity
 		Entity(const char* name, const char* description, Entity* parent);
 		virtual ~Entity();
 
-		virtual void look(const vector<string>& args) const;
+		virtual void Look(const vector<string>& args) const;
 
-		virtual void tick();
+		virtual void Tick();
 
-		void changeParentTo(Entity* new_parent);
-		Entity* find(EntityType type) const;
-		Entity* find(const string& name, EntityType type) const;
-
-		void findAll(EntityType type, list<Entity*>& list_to_fill) const;
+		void ChangeParentTo(Entity* new_parent);
+		Entity* Find(EntityType type) const;
+		Entity* Find(const string& name, EntityType type) const;
+		void FindAll(EntityType type, list<Entity*>& list_to_fill) const;
 
 	public:
 		EntityType m_Type;
