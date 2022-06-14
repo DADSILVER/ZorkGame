@@ -36,6 +36,16 @@ void Room::Look(const vector<string>& args) const
 		}
 	}
 
+	//NPCs
+
+	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
+		//NPCs
+		if ((*it)->m_Type == CREATURE)
+		{
+			(*it)->Look(args);
+		}
+	}
+
 	//Items
 
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {

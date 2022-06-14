@@ -44,12 +44,12 @@ void Creature::Look(const vector<string>& args) const
 {
 	if (IsAlive())
 	{
-		cout << m_Name << "\n";
+		cout << "\n" << m_Name << "\n";
 		cout << m_Description << "\n";
 	}
 	else
 	{
-		cout << m_Name << "'s corpse\n";
+		cout << "\n"  << m_Name << "'s corpse\n";
 		cout << "Here lies dead: " << m_Description << "\n";
 	}
 }
@@ -241,6 +241,12 @@ bool Creature::UnEquip(const vector<string>& args)
 
 void Creature::Tick()
 {
+	if (m_CombatTarget != nullptr) {
+		if (m_Parent->Find(m_CombatTarget) == true)
+			MakeAttack();
+		else
+			m_CombatTarget = NULL;
+	}
 }
 
 void Creature::Inventory() const
@@ -271,7 +277,7 @@ bool Creature::Stats() const
 	cout << "\n" << m_Name << " stats:\n";
 	cout << " Hit points: " << m_HitPoints <<"\n";
 	cout << " Damage: " << m_MaxDamage << " - "<< m_MinDamage << "\n";
-	cout << " Damage: " << m_MaxProtection << " - " << m_MinProtection << "\n";
+	cout << " Protection: " << m_MaxProtection << " - " << m_MinProtection << "\n";
 
 	return true;
 }
@@ -362,10 +368,26 @@ bool Creature::Lock(const vector<string>& args) const
 
 bool Creature::Attack(const vector<string>& args)
 {
-	Creature* target = (Creature*)m_Parent->Find(args[1], CREATURE);
+	Creature* target = dynamic_cast<Creature*>(m_Parent->Find(args[1], NPCAlly));
+	if (target != NULL)
+	{
+		cout << "\nYou Can't attack your friend.\n";
+		return false;
+	}
+	
+	target = dynamic_cast<Creature*>(m_Parent->Find(args[1], CREATURE));
 
 	if (target == NULL)
+	{
+		cout << "\n" << args[1] << " is not here.\n";
 		return false;
+	}
+
+	if (!target->IsAlive())
+	{
+		cout << "\n" << args[1] << " died.\n";
+		return false;
+	}
 
 	m_CombatTarget = target;
 	cout << "\n" << m_Name << " attacks " << target->m_Name << "!\n";

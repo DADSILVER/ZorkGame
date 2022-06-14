@@ -19,7 +19,12 @@ bool Same(const string& a, const char* b)
 
 int Roll(int min, int max)
 {
-	return (max > 0) ? min + (rand() % (max - min)) : 0;
+	if (max == 0)
+	{
+		return 0;
+	}
+
+	return rand() % max + min;
 }
 
 void Tokenize(const string& line, vector<string>& arguments)

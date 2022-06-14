@@ -103,17 +103,17 @@ bool Player::Take(const vector<string>& args)
 			item1 = dynamic_cast<Item*>(m_Parent->Find(args[3], ITEM));
 			if (item1 == nullptr)
 			{
-				cout << "\nThere is no item here with that name.\n";
+				cout << "\nThere is no item here with name " << item1->m_Name <<".\n";
 				return false;
 			}
 		}
 
-		Item* item2 = dynamic_cast<Item*>(m_Parent->Find(args[1], ITEM));
+		Item* item2 = dynamic_cast<Item*>(item1->Find(args[1], ITEM));
 
 
 		if (item2 == nullptr)
 		{
-			cout << "\nThere is no item here with that name.\n";
+			cout << "\nThere is no item here with name " << args[1] << ".\n";
 			return false;
 		}
 
@@ -130,6 +130,13 @@ void Player::Tick()
 	{
 		DoDamage(2);
 		m_InvalidAction = false;
+	}
+
+	if (m_CombatTarget != nullptr) {
+		if (m_Parent->Find(m_CombatTarget) == true)
+			MakeAttack();
+		else
+			m_CombatTarget = NULL;
 	}
 }
 

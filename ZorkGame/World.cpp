@@ -60,10 +60,14 @@ World::World()
 	// Create NPC
 	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom);
 	jonny->m_State = "Seriously injured";
+	jonny->m_HitPoints = 10;
+	jonny->m_MaxDamage = 3;
 	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom);
 	dolores->m_State = "Trying to healt Jonny";
 	dolores->m_Dialog = "I need more bandages. There is no more in the first aid kit. Go to the infirmary. HURRY UP!!!!";
 	dolores->m_Talkable = true;
+	dolores->m_HitPoints = 15;
+	dolores->m_MaxDamage = 3;
 
 	//Add NPCs
 	m_Entities.push_back(jonny);
@@ -74,7 +78,7 @@ World::World()
 	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary);
 	stranger->m_HitPoints = 14;
 	stranger->m_MaxDamage = 2;
-	Creature* eel = new Creature("Eel", "", ocean1);
+	Creature* eel = new Creature("Eel", "", hall);
 	eel->m_HitPoints = 20;
 	eel->m_MaxDamage = 4;
 	
@@ -127,6 +131,10 @@ World::~World()
 bool World::Tick(vector<string>& args)
 {
 	bool ret = true;
+	if (!m_Player->IsAlive())
+	{
+		args.push_back("quit");
+	}
 
 	if (args.size() > 0 && args[0].length() > 0)
 	{

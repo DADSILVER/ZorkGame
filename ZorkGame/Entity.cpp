@@ -46,6 +46,19 @@ Entity* Entity::Find(EntityType type) const
 	return NULL;
 }
 
+bool Entity::Find(Entity* entity) const
+{
+	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
+	{
+		if ((*it) == entity)
+		{
+						return true;
+		}
+	}
+
+	return false;
+}
+
 Entity* Entity::Find(const string& name, EntityType type) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
