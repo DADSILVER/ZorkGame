@@ -79,8 +79,8 @@ World::World()
 	stranger->m_HitPoints = 14;
 	stranger->m_MaxDamage = 2;
 	Creature* eel = new Creature("Eel", "", hall);
-	eel->m_HitPoints = 20;
-	eel->m_MaxDamage = 4;
+	eel->m_HitPoints = 10;
+	eel->m_MaxDamage = 2;
 	
 
 	//Add NPCs
@@ -110,7 +110,7 @@ World::World()
 	m_Entities.push_back(headLantern);
 
 	// Add palyer
-	m_Player = new Player("Captian", "You are the captain of the place", cptRoom);
+	m_Player = new Player("Captian", "You are the captain of the place.", cptRoom);
 	m_Player->m_HitPoints = 30;
 	m_Player->m_MaxDamage = 3;
 	m_Entities.push_back(m_Player);
@@ -133,7 +133,8 @@ bool World::Tick(vector<string>& args)
 	bool ret = true;
 	if (!m_Player->IsAlive())
 	{
-		args.push_back("quit");
+		//args.clear();
+		//args.push_back("quit");
 	}
 
 	if (args.size() > 0 && args[0].length() > 0)
@@ -248,6 +249,7 @@ bool World::ParseCommand(vector<string>& args)
 			}
 			else if (Same(args[0], "loot") || Same(args[0], "lt"))
 			{
+				m_Player->Loot(args);
 			}
 			else
 				ret = false;

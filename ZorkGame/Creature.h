@@ -30,6 +30,7 @@ public:
 	virtual bool Lock(const vector<string>& args) const;
 	virtual bool Attack(const vector<string>& args);
 	virtual int MakeAttack();
+	virtual bool Loot(const vector<string>& args);
 	int ReceiveAttack(int damage);
 	virtual void DoDamage(int dmg);
 

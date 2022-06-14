@@ -23,23 +23,25 @@ Room::~Room()
 void Room::Look(const vector<string>& args) const
 {
 
-	cout << "\n" << m_Name << "\n";
-	cout << m_Description;
-
+	cout << "\n" << m_Name << ", " << m_Description << "\n";
+ 
 	//NPCs
 
+	cout << "\nNPCs:";
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		//NPCs
+
 		if ((*it)->m_Type == NPCAlly)
 		{
 			(*it)->Look(args);
 		}
 	}
 
-	//NPCs
-
+	//Creatures
+	cout << "\nCreatures:";
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
-		//NPCs
+		//Creatures
+
 		if ((*it)->m_Type == CREATURE)
 		{
 			(*it)->Look(args);
@@ -47,7 +49,7 @@ void Room::Look(const vector<string>& args) const
 	}
 
 	//Items
-
+	cout << "\nItems:";
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		if ((*it)->m_Type == ITEM)
 		{
@@ -56,7 +58,7 @@ void Room::Look(const vector<string>& args) const
 	}
 
 	//exits
-
+	cout << "\nExits: ";
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		if ((*it)->m_Type == EXIT)
 		{

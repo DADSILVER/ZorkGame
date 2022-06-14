@@ -19,9 +19,50 @@ Player::~Player()
 
 void Player::Look(const vector<string>& args) const
 {
-	cout << "\n" << m_Name << "\n";
-	cout << m_Description << "\n";
-	m_Parent->Look(args);
+	if (args.size() == 1) 
+	{
+		cout << "\n" << m_Name << ", " << m_Description << "\n";
+		m_Parent->Look(args);
+	}
+	else 
+	{ 
+		if(Same(args[1],"me"))
+		{
+			cout << "\n" << m_Name << ", " << m_Description << "\n";
+			Inventory();
+			Stats();
+			return;
+		}
+		else
+		{
+			Entity* entity = Find(args[1], NPCAlly);
+			if (entity != NULL) {
+				entity->Look(args);
+				return;
+			}
+
+			entity = Find(args[1], CREATURE);
+			if (entity != NULL) {
+				entity->Look(args);
+				return;
+			}
+
+			entity = Find(args[1], ITEM);
+			if (entity != NULL) {
+				entity->Look(args);
+				return;
+			}
+
+			entity = Find(args[1], ROOM);
+			if (entity != NULL) {
+				entity->Look(args);
+				return;
+			}
+
+			cout << "\nThere is nothing here with name " << args[1] << ".\n";
+		}
+		
+	}
 }
 
 bool Player::Go(const vector<string>& args)

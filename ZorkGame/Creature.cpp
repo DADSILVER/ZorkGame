@@ -42,16 +42,41 @@ bool Creature::Go(const vector<string>& args)
 
 void Creature::Look(const vector<string>& args) const
 {
-	if (IsAlive())
-	{
-		cout << "\n" << m_Name << "\n";
-		cout << m_Description << "\n";
+	if (args.max_size() == 1) {
+		if (IsAlive())
+		{
+			cout << "\n" << m_Name << ", ";
+			cout << m_Description << "\n";
+		}
+		else
+		{
+			cout << "\n" << m_Name << "'s corpse\n";
+			cout << "Here lies dead: " << m_Description << "\n";
+		}
 	}
 	else
 	{
-		cout << "\n"  << m_Name << "'s corpse\n";
-		cout << "Here lies dead: " << m_Description << "\n";
+		if (IsAlive())
+		{
+			cout << "\n" << m_Name << "\n";
+			cout << m_Description << "\n";
+		}
+		else
+		{
+			cout << "\n" << m_Name << "'s corpse\n";
+			cout << "Here lies dead: " << m_Description << "\n";
+			list<Entity*> items;
+			FindAll(ITEM, items);
+			cout << "\n" << m_Name << " owns:\n";
+			for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+			{
+				cout << (*it)->m_Name << "\n";
+			}
+		}
 	}
+
+
+	
 }
 
 bool Creature::Take(const vector<string>& args)
@@ -418,10 +443,51 @@ int Creature::MakeAttack()
 	}
 }
 
+bool Creature::Loot(const vector<string>& args)
+{
+	Creature* target = dynamic_cast<Creature*>(m_Parent->Find(args[1], CREATURE));
+
+	if (target == NULL)
+	{
+		cout << "\n" << args[1] << " is not here.\n";
+		return false;
+	}
+
+	if (target->IsAlive())
+	{
+		cout << "\n" << args[1] << " is alive, you can`t loot.\n";
+		return false;
+	}
+
+	list<Entity*> items;
+	target->FindAll(ITEM, items);
+
+	if (items.size() == 0)
+	{
+		cout << "\n" << target->m_Name << " does not own any item.\n";
+		return false;
+	}
+
+	
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
+	{
+		cout << (*it)->m_Name << "\n";
+		(*it)->ChangeParentTo(this);
+	}
+	cout << " Added to the inventary.\n";
+
+	return true;
+}
+
 int Creature::ReceiveAttack(int damage)
 {
 	int prot = Roll(m_MinProtection, m_MaxProtection);
 	int received = damage - prot;
+
+	if (received < 0)
+	{
+		received = 0;
+	}
 
 	DoDamage(received);
 

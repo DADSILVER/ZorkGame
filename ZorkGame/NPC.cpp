@@ -21,7 +21,7 @@ void NPC::Look(const vector<string>& args) const
 {
 	if (IsAlive())
 	{
-		cout << m_Name << "\n";
+		cout << "\n" << m_Name << ", ";
 		cout << m_Description << "\n";
 	}
 	else
