@@ -2,14 +2,15 @@
 #include "NPC.h"
 
 
-NPC::NPC(const char* name, const char* description, Room* room):
-	Creature(name, description, room,0)
+NPC::NPC(const char* name, const char* description, Room* room, Item* item):
+	Creature(name, description, room,0), m_MissionItem(nullptr)
 {
 	m_Type = NPCAlly;
 	
 	m_Talkable = false;
 	m_Dialog = "";
 	m_State = "";
+	m_MissionItem = item;
 
 }
 

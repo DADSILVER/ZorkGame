@@ -24,7 +24,7 @@ int main()
 
 	while (1)
 	{
-		if (_kbhit() != 0)
+		if (_kbhit() != 0 && !myWorld.IsInCombat())
 		{
 			key = _getch();
 			if (key == '\b') // backspace

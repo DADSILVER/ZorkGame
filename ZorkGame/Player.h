@@ -18,14 +18,18 @@ public:
 	bool Take(const vector<string>& args) override;
 	void Tick() override;
 	void Died() const override;
+	virtual bool IsMisionDone() const;
+	void Give(const vector<string>& args);
 	virtual bool CanDoAction(const vector<string>& args) const;
 	virtual bool CantSee();
 	
 
 public:
 	string m_LastMove;
+	
 
 private:
+	bool m_IsMissionDone;
 	bool m_InvalidAction;
 
 };

@@ -324,13 +324,13 @@ void Creature::Tick()
 		else
 			m_CombatTarget = nullptr;
 	}
-
+	/*
 	if (IsAlive() && PlayerInRoom() && m_CombatTarget == nullptr)
 	{
 		if ((rand() % 100) < m_AggreLevel) {
 			m_CombatTarget = dynamic_cast<Creature*>(m_Parent->Find(PLAYER));	
 		}
-	}
+	}*/
 }
 
 void Creature::Inventory() const
@@ -532,7 +532,7 @@ bool Creature::Loot(const vector<string>& args)
 		return false;
 	}
 
-	
+	cout << "\n";
 	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
 	{
 		cout << (*it)->m_Name << "\n";

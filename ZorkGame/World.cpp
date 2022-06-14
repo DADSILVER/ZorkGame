@@ -58,11 +58,11 @@ World::World()
 
 
 	// Create NPC
-	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom);
+	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom,nullptr);
 	jonny->m_State = "Seriously injured";
 	jonny->m_HitPoints = 10;
 	jonny->m_MaxDamage = 3;
-	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom);
+	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom, nullptr);
 	dolores->m_State = "Trying to healt Jonny";
 	dolores->m_Dialog = "I need more bandages. There is no more in the first aid kit. Go to the infirmary. HURRY UP!!!!";
 	dolores->m_Talkable = true;
@@ -78,10 +78,9 @@ World::World()
 	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary, 5);
 	stranger->m_HitPoints = 14;
 	stranger->m_MaxDamage = 2;
-	Creature* eel = new Creature("Eel", "can be aggressive", hall
-		,30);
-	eel->m_HitPoints = 100;
-	eel->m_MaxDamage = 100;
+	Creature* eel = new Creature("Eel", "can be aggressive", hall,30);
+	eel->m_HitPoints = 15;
+	eel->m_MaxDamage = 3;
 	
 
 	//Add NPCs
@@ -101,7 +100,7 @@ World::World()
 	divingSuit->m_MinValue = 2;
 	Item* headLantern = new Item("Headlantern", "You can use as helmet to see in the drakness.", crewRoom, ItemType::LANTERN);
 	Item* bandages = new Item("Bandages", "You can use to save Jonny.", stranger, ItemType::COMMON);
-
+	dolores->m_MissionItem = bandages;
 
 	//Add Items
 	m_Entities.push_back(key);
@@ -159,13 +158,22 @@ void World::GameLoop()
 	}
 }
 
-bool World::IsGameFinished()
+bool World::IsGameFinished() const
 {
 	if (!m_Player->IsAlive())
 	{		
 		return true;
 	}
+	if (m_Player->IsMisionDone())
+	{
+		return true;
+	}
 	return false;
+}
+
+bool World::IsInCombat() const
+{
+	return m_Player->m_CombatTarget != nullptr;
 }
 
 bool World::ParseCommand(vector<string>& args)
@@ -289,6 +297,10 @@ bool World::ParseCommand(vector<string>& args)
 			else if (Same(args[0], "drop") || Same(args[0], "put"))
 			{
 				m_Player->Drop(args);
+			}
+			else if (Same(args[0], "give") || Same(args[0], "g"))
+			{
+				m_Player->Give(args);
 			}
 			else
 				ret = false;

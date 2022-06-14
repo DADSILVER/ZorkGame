@@ -7,7 +7,7 @@
 #include "globals.h"
 
 Player::Player(const char* name, const char* description, Room* room):
-Creature(name, description, room,0), m_InvalidAction(false), m_LastMove("back")
+Creature(name, description, room,0), m_InvalidAction(false), m_LastMove("back"), m_IsMissionDone(false)
 {
 	m_Type = PLAYER;
 }
@@ -154,7 +154,7 @@ bool Player::Take(const vector<string>& args)
 			item1 = dynamic_cast<Item*>(m_Parent->Find(args[3], ITEM));
 			if (item1 == nullptr)
 			{
-				cout << "\nThere is no item here with name " << item1->m_Name <<".\n";
+				cout << "\nThere is no item here with name " << args[3] <<".\n";
 				return false;
 			}
 		}
@@ -200,6 +200,45 @@ void Player::Died() const
 	cout << m_Name << " dies.\n";
 }
 
+bool Player::IsMisionDone() const
+{
+	if (m_IsMissionDone) 
+	{
+		cout << " Good job. You save jonny.\n";
+	}
+	return m_IsMissionDone;
+}
+
+void Player::Give(const vector<string>& args)
+{
+	NPC* npc = dynamic_cast<NPC*>(m_Parent->Find(args[3], NPCAlly));
+	if (npc == nullptr)
+	{
+		cout << "\nNone name " << args[3] << ".\n";
+		return ;
+	}
+
+	Item* item = dynamic_cast<Item*>(Find(args[1], ITEM));
+
+
+	if (item == nullptr)
+	{
+		cout << "\nThere is no item here with name " << args[1] << ".\n";
+		return;
+	}
+
+	if (item != npc->m_MissionItem)
+	{
+		cout << args[3] << "\ndon't need " << args[1] << ".\n";
+		return;
+	}
+
+	cout << "\nYou give " << args[1] << " to " << args[3] << ".\n";
+	item->ChangeParentTo(npc);
+	m_IsMissionDone = true;
+	return;
+}
+
 bool Player::CanDoAction(const vector<string>& args) const
 {
 	if (dynamic_cast<Room*>(m_Parent)->m_RoomType == RoomType::OCEAN)
@@ -225,7 +264,6 @@ bool Player::CanDoAction(const vector<string>& args) const
 	
 	return true;
 }
-
 
 bool Player::CantSee()
 {
