@@ -7,8 +7,8 @@
 
 
 
-Creature::Creature(const char* name, const char* description, Room* room) :
-	Entity(name, description, room)
+Creature::Creature(const char* name, const char* description, Room* room, int aggreLevel) :
+	Entity(name, description, room), m_AggreLevel(0)
 {
 	m_Type = CREATURE;
 	m_HitPoints = 1;
@@ -17,6 +17,7 @@ Creature::Creature(const char* name, const char* description, Room* room) :
 	m_Skin = nullptr;
 	m_Weapon = nullptr;
 	m_Helmet = nullptr;
+	m_AggreLevel = aggreLevel;
 }
 
 Creature::~Creature()
@@ -42,7 +43,7 @@ bool Creature::Go(const vector<string>& args)
 
 void Creature::Look(const vector<string>& args) const
 {
-	if (args.max_size() == 1) {
+	if (args.size() == 1) {
 		if (IsAlive())
 		{
 			cout << "\n" << m_Name << ", ";
@@ -58,7 +59,7 @@ void Creature::Look(const vector<string>& args) const
 	{
 		if (IsAlive())
 		{
-			cout << "\n" << m_Name << "\n";
+			cout << "\n" << m_Name << ", ";
 			cout << m_Description << "\n";
 		}
 		else
@@ -67,7 +68,7 @@ void Creature::Look(const vector<string>& args) const
 			cout << "Here lies dead: " << m_Description << "\n";
 			list<Entity*> items;
 			FindAll(ITEM, items);
-			cout << "\n" << m_Name << " owns:\n";
+			cout << m_Name << " owns:\n";
 			for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it)
 			{
 				cout << (*it)->m_Name << "\n";
@@ -266,11 +267,19 @@ bool Creature::UnEquip(const vector<string>& args)
 
 void Creature::Tick()
 {
-	if (m_CombatTarget != nullptr) {
+	if (m_CombatTarget != nullptr) 
+	{
 		if (m_Parent->Find(m_CombatTarget) == true)
 			MakeAttack();
 		else
-			m_CombatTarget = NULL;
+			m_CombatTarget = nullptr;
+	}
+
+	if (IsAlive() && PlayerInRoom() && m_CombatTarget == nullptr)
+	{
+		if ((rand() % 100) < m_AggreLevel) {
+			m_CombatTarget = dynamic_cast<Creature*>(m_Parent->Find(PLAYER));	
+		}
 	}
 }
 
@@ -496,7 +505,7 @@ int Creature::ReceiveAttack(int damage)
 
 	if (IsAlive() == false)
 	{
-		cout << m_Name << " dies.\n";
+		cout << m_Name << " dies.\n>";
 	}
 
 	return received;

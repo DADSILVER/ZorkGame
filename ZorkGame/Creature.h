@@ -14,7 +14,7 @@ class Creature :
     public Entity
 {
 public:
-	Creature(const char* name, const char* description, Room* room);
+	Creature(const char* name, const char* description, Room* room, int aggreLevel);
 	~Creature();
 
 	virtual bool Go(const vector<string>& args);
@@ -45,6 +45,7 @@ public:
 	int m_MaxDamage;
 	int m_MinProtection;
 	int m_MaxProtection;
+	int m_AggreLevel;
 	Creature* m_CombatTarget;
 
 	Item* m_Weapon;

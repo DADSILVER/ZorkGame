@@ -75,10 +75,10 @@ World::World()
 
 	
 	// Create creatures
-	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary);
+	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary, 5);
 	stranger->m_HitPoints = 14;
 	stranger->m_MaxDamage = 2;
-	Creature* eel = new Creature("Eel", "", hall);
+	Creature* eel = new Creature("Eel", "can be aggressive", ocean1,30);
 	eel->m_HitPoints = 10;
 	eel->m_MaxDamage = 2;
 	
@@ -218,6 +218,7 @@ bool World::ParseCommand(vector<string>& args)
 		{
 			if (Same(args[0], "look") || Same(args[0], "l"))
 			{
+				m_Player->Look(args);
 			}
 			else if (Same(args[0], "go"))
 			{

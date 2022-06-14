@@ -35,27 +35,37 @@ void Player::Look(const vector<string>& args) const
 		}
 		else
 		{
-			Entity* entity = Find(args[1], NPCAlly);
-			if (entity != NULL) {
+			Entity* entity = m_Parent->Find(args[1], NPCAlly);
+			if (entity != NULL) 
+			{
 				entity->Look(args);
 				return;
 			}
 
-			entity = Find(args[1], CREATURE);
-			if (entity != NULL) {
+			entity = m_Parent->Find(args[1], CREATURE);
+			if (entity != NULL) 
+			{
 				entity->Look(args);
 				return;
 			}
 
 			entity = Find(args[1], ITEM);
-			if (entity != NULL) {
+			if (entity != NULL) 
+			{
 				entity->Look(args);
 				return;
 			}
 
-			entity = Find(args[1], ROOM);
-			if (entity != NULL) {
+			entity = m_Parent->Find(args[1], ITEM);
+			if (entity != NULL) 
+			{
 				entity->Look(args);
+				return;
+			}
+
+			if (Same("room", args[1]))
+			{
+				m_Parent->Look(args);
 				return;
 			}
 
