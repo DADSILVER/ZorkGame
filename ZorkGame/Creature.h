@@ -28,6 +28,10 @@ public:
 	virtual bool Stats() const;
 	virtual bool Unlock(const vector<string>& args) const;
 	virtual bool Lock(const vector<string>& args) const;
+	virtual bool Attack(const vector<string>& args);
+	virtual int MakeAttack();
+	int ReceiveAttack(int damage);
+	virtual void DoDamage(int dmg);
 
 	Room* GetRoom() const;
 	bool PlayerInRoom() const;

@@ -170,9 +170,6 @@ bool Player::DontSee() const
 	return true;
 }
 
-void Player::DoDamage(int dmg)
-{
-	m_HitPoints -= dmg;
-}
+
 
 

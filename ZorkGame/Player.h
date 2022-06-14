@@ -19,7 +19,7 @@ public:
 	void Tick() override;
 	virtual bool CanDoAction(const vector<string>& args);
 	virtual bool DontSee() const;
-	virtual void DoDamage(int dmg);
+	
 
 public:
 	string m_LastMove;

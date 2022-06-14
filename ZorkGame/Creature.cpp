@@ -3,6 +3,7 @@
 #include "exit.h"
 #include "room.h"
 #include "Item.h"
+#include "globals.h"
 
 
 
@@ -357,6 +358,65 @@ bool Creature::Lock(const vector<string>& args) const
 	exit->m_Locked = true;
 
 	return true;
+}
+
+bool Creature::Attack(const vector<string>& args)
+{
+	Creature* target = (Creature*)m_Parent->Find(args[1], CREATURE);
+
+	if (target == NULL)
+		return false;
+
+	m_CombatTarget = target;
+	cout << "\n" << m_Name << " attacks " << target->m_Name << "!\n";
+	return true;
+}
+
+int Creature::MakeAttack()
+{
+	if (!IsAlive() || !m_CombatTarget->IsAlive())
+	{
+		m_CombatTarget = m_CombatTarget->m_CombatTarget = NULL;
+		return 0;
+	}
+	
+	int result = Roll(m_MinDamage, m_MaxDamage);
+
+	if (PlayerInRoom())
+	{
+		cout << m_Name << " attacks " << m_CombatTarget->m_Name << " for " << result << "\n";
+	}
+
+	m_CombatTarget->ReceiveAttack(result);
+
+	if (m_CombatTarget->m_CombatTarget == NULL)
+	{
+		m_CombatTarget->m_CombatTarget = this;
+
+	}
+}
+
+int Creature::ReceiveAttack(int damage)
+{
+	int prot = Roll(m_MinProtection, m_MaxProtection);
+	int received = damage - prot;
+
+	DoDamage(received);
+
+	if (PlayerInRoom())
+		cout << m_Name << " is hit for " << received << " damage (" << prot << " blocked) \n";
+
+	if (IsAlive() == false)
+	{
+		cout << m_Name << " dies.\n";
+	}
+
+	return received;
+}
+
+void Creature::DoDamage(int dmg)
+{
+	m_HitPoints -= dmg;
 }
 
 Room* Creature::GetRoom() const

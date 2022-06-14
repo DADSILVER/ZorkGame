@@ -234,11 +234,9 @@ bool World::ParseCommand(vector<string>& args)
 			{
 				m_Player->UnEquip(args);
 			}
-			else if (Same(args[0], "examine") || Same(args[0], "ex"))
-			{
-			}
 			else if (Same(args[0], "attack") || Same(args[0], "at"))
 			{
+				m_Player->Attack(args);
 			}
 			else if (Same(args[0], "loot") || Same(args[0], "lt"))
 			{
