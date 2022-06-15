@@ -3,6 +3,7 @@
 ### How to play
 Firstly, the player has to write the actions that they want to perform, such as “go north” or “take knife”. To see all the options available, type “help”.
 
+![Help](/ZorkGame/Img/Help.PNG)
 
 ### How To Win The Game
 Welcome to my zort game. You are the captain of an underwater base located in the depths of the Mariana Trench, that studies algae and living beings in the area. Together with your colleagues, Dolores and Jonny, you have discovered an algae that may have the ability to cure cancer.
@@ -22,4 +23,4 @@ Give them to Dolores so that she can heal Jonny and save his life.
 If you die the game will be over.
 ### Map
 
-
+![Map](/ZorkGame/Img/Map.jpg)
