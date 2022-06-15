@@ -33,8 +33,8 @@ public:
 	bool ParseCommand(vector<string>& args);
 	void GameLoop();
 	bool IsGameFinished() const;
-	bool IsInCombat() const;
-	bool Help() const;
+	bool IsPlayerInCombat() const;
+	void Help() const;
 
 private:
 	World();

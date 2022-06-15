@@ -14,7 +14,7 @@ class Creature :
     public Entity
 {
 public:
-	Creature(const char* name, const char* description, Room* room, int aggreLevel);
+	Creature(const char* name, const char* description, Room* room, int hitPoints, int aggreLevel);
 	~Creature();
 
 	virtual bool Go(const vector<string>& args);
@@ -33,11 +33,11 @@ public:
 	virtual void Died() const;
 	bool Loot(const vector<string>& args);
 	int ReceiveAttack(int damage);
-	void DoDamage(int dmg);
+	void TakeDamage(int dmg);
 
-	Room* GetRoom() const;
-	bool PlayerInRoom() const;
-	bool IsAlive() const;
+	inline Room* GetRoom() const { return dynamic_cast<Room*>(m_Parent); };
+	inline bool PlayerInRoom() const { return m_Parent->Find(PLAYER) != nullptr; };
+	inline bool IsAlive() const { return m_HitPoints > 0; };
 
 public:
 

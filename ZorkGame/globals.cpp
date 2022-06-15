@@ -23,6 +23,10 @@ int Roll(int min, int max)
 	{
 		return 0;
 	}
+	if (min>max)
+	{
+		min = max;
+	}
 
 	return rand() % max + min;
 }

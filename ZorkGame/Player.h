@@ -9,7 +9,7 @@ class Player :
     public Creature
 {
 public:
-	Player(const char* name, const char* description, Room* room);
+	Player(const char* name, const char* description, Room* room, int hitPoints);
 	~Player();
 
 	bool Go(const vector<string>& args) override;

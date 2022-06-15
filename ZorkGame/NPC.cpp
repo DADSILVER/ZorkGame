@@ -2,8 +2,8 @@
 #include "NPC.h"
 
 
-NPC::NPC(const char* name, const char* description, Room* room, Item* item):
-	Creature(name, description, room,0), m_MissionItem(nullptr)
+NPC::NPC(const char* name, const char* description, Room* room, Item* item, int hitPoints):
+	Creature(name, description, room, hitPoints, 0), m_MissionItem(nullptr)
 {
 	m_Type = NPCAlly;
 	
@@ -11,6 +11,7 @@ NPC::NPC(const char* name, const char* description, Room* room, Item* item):
 	m_Dialog = "";
 	m_State = "";
 	m_MissionItem = item;
+	m_HitPoints = hitPoints;
 
 }
 

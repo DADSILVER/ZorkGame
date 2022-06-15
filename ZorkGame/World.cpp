@@ -20,7 +20,6 @@ World::World()
 	Room* workRoom = new Room("Work room", "You are in Work room.", RoomType::NORMAL);
 	Room* chD1 = new Room("Depressurization chamber A1", "You are in Depressurization chamber A1.", RoomType::NORMAL);
 	Room* ocean1 = new Room("Ocean", "Water everywhere.", RoomType::OCEAN);
-	//Room* room7 = new Room("Ocean", "It's very dark you can't see anything.");
 	Room* chD2 = new Room("Depressurization chamber A2", "You are in Depressurization chamber A2.", RoomType::NORMAL);
 	Room* infirmary = new Room("Infirmary", "You are in infirmary.", RoomType::NORMAL);
 
@@ -31,7 +30,6 @@ World::World()
 	m_Entities.push_back(workRoom);
 	m_Entities.push_back(chD1);
 	m_Entities.push_back(ocean1);
-	//entities.push_back(room7);
 	m_Entities.push_back(chD2);
 	m_Entities.push_back(infirmary);
 
@@ -58,15 +56,13 @@ World::World()
 
 
 	// Create NPC
-	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom,nullptr);
+	NPC* jonny = new NPC("Jonny", "Diving technician.", crewRoom,nullptr, 10);
 	jonny->m_State = "Seriously injured";
-	jonny->m_HitPoints = 10;
 	jonny->m_MaxDamage = 3;
-	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom, nullptr);
+	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom, nullptr, 15);
 	dolores->m_State = "Trying to treat Jonny";
 	dolores->m_Dialog = "I need more bandages. There is no more in the first aid kit. Go to the infirmary. HURRY UP!!!!";
 	dolores->m_Talkable = true;
-	dolores->m_HitPoints = 15;
 	dolores->m_MaxDamage = 3;
 
 	//Add NPCs
@@ -75,11 +71,9 @@ World::World()
 
 	
 	// Create creatures
-	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary, 5);
-	stranger->m_HitPoints = 14;
+	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary, 14, 5);
 	stranger->m_MaxDamage = 2;
-	Creature* eel = new Creature("Eel", "can be aggressive", ocean1,30);
-	eel->m_HitPoints = 15;
+	Creature* eel = new Creature("Eel", "can be aggressive", ocean1, 15, 30);
 	eel->m_MaxDamage = 3;
 	
 
@@ -111,8 +105,7 @@ World::World()
 	m_Entities.push_back(bandages);
 
 	// Add palyer
-	m_Player = new Player("Captain", "You are the captain of the place.", cptRoom);
-	m_Player->m_HitPoints = 30;
+	m_Player = new Player("Captain", "You are the captain of the place.", cptRoom, 30);
 	m_Player->m_MaxDamage = 3;
 	m_Entities.push_back(m_Player);
 
@@ -159,23 +152,19 @@ void World::GameLoop()
 
 bool World::IsGameFinished() const
 {
-	if (!m_Player->IsAlive())
+	if (!m_Player->IsAlive() || m_Player->IsMisionDone())
 	{		
-		return true;
-	}
-	if (m_Player->IsMisionDone())
-	{
 		return true;
 	}
 	return false;
 }
 
-bool World::IsInCombat() const
+bool World::IsPlayerInCombat() const
 {
 	return m_Player->m_CombatTarget != nullptr;
 }
 
-bool World::Help() const
+void World::Help() const
 {
 	cout << "\n\nExample: \n";
 	cout << "'Look' or 'l' to see the room.\n";

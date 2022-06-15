@@ -4,7 +4,7 @@ class NPC :
     public Creature
 {
 public:
-    NPC(const char* name, const char* description, Room* room, Item* item);
+    NPC(const char* name, const char* description, Room* room, Item* item, int hitPoints);
     ~NPC();
 
     void Look(const vector<string>& args) const override;

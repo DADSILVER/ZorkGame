@@ -6,8 +6,8 @@
 #include "Item.h"
 #include "globals.h"
 
-Player::Player(const char* name, const char* description, Room* room):
-Creature(name, description, room,0), m_InvalidAction(false), m_LastMove("back"), m_IsMissionDone(false)
+Player::Player(const char* name, const char* description, Room* room, int hitPoints):
+Creature(name, description, room, hitPoints, hitPoints, 0), m_InvalidAction(false), m_LastMove("back"), m_IsMissionDone(false)
 {
 	m_Type = PLAYER;
 }

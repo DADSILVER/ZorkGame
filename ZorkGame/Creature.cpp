@@ -7,11 +7,11 @@
 
 
 
-Creature::Creature(const char* name, const char* description, Room* room, int aggreLevel) :
+Creature::Creature(const char* name, const char* description, Room* room, int hitPoints, int aggreLevel) :
 	Entity(name, description, room), m_AggreLevel(0)
 {
 	m_Type = CREATURE;
-	m_HitPoints = 1;
+	m_HitPoints = hitPoints;
 	m_MinDamage = m_MaxDamage = m_MinProtection = m_MaxProtection = 0;
 	m_CombatTarget = nullptr;
 	m_Skin = nullptr;
@@ -571,7 +571,7 @@ int Creature::ReceiveAttack(int damage)
 		received = 0;
 	}
 
-	DoDamage(received);
+	TakeDamage(received);
 
 	if (PlayerInRoom())
 		cout << m_Name << " is hit for " << received << " damage (" << prot << " blocked) \n";
@@ -584,22 +584,13 @@ int Creature::ReceiveAttack(int damage)
 	return received;
 }
 
-void Creature::DoDamage(int dmg)
+void Creature::TakeDamage(int dmg)
 {
 	m_HitPoints -= dmg;
+	if (m_HitPoints < 0)
+	{
+		m_HitPoints = 0;
+	}
 }
 
-Room* Creature::GetRoom() const
-{
-	return (Room*)m_Parent;
-}
 
-bool Creature::PlayerInRoom() const
-{
-	return m_Parent->Find(PLAYER) != nullptr;
-}
-
-bool Creature::IsAlive() const
-{
-	return m_HitPoints > 0;
-}

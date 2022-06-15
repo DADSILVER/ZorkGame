@@ -28,7 +28,7 @@ int main()
 	cout << "----------------\n";
 	while (1)
 	{
-		if (_kbhit() != 0 && !World::getInstance().IsInCombat())
+		if (_kbhit() != 0 && !World::getInstance().IsPlayerInCombat())
 		{
 			key = _getch();
 			if (key == '\b') // backspace
@@ -57,10 +57,14 @@ int main()
 		}
 
 		if (args.size() > 0 && Same(args[0], "quit"))
+		{
 			break;
+		}
 
 		if (World::getInstance().Tick(args) == false)
+		{
 			cout << "\nSorry, I do not understand your command.\n";
+		}
 
 		if (args.size() > 0)
 		{

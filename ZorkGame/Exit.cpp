@@ -37,7 +37,7 @@ Room* Exit::GetDestinationFrom(const Room* room) const
 	if (room == m_Parent)
 		return m_Destination;
 	if (room == m_Destination)
-		return (Room*)m_Parent;
+		return dynamic_cast<Room*>(m_Parent);
 
 	return NULL;
 }
