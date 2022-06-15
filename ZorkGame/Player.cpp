@@ -16,7 +16,6 @@ Player::~Player()
 {
 }
 
-
 void Player::Look(const vector<string>& args) const
 {
 	if (args.size() == 1) 
@@ -90,11 +89,13 @@ bool Player::Go(const vector<string>& args)
 		return false;
 	}
 
+	// Need equiped diving-suit to go a room with type OCEAN
 	if ((exit->m_Destination->m_RoomType == RoomType::OCEAN || ((Room*)exit->m_Parent)->m_RoomType == RoomType::OCEAN) && m_Skin==nullptr) {
 		cout << "\nYou need equip a diving suit.\n";
 		return false;
 	}
 
+	// Save last move
 	if (args[1] == exit->m_OppositeName)
 	{
 		m_LastMove = exit->m_Name;
@@ -103,8 +104,11 @@ bool Player::Go(const vector<string>& args)
 	{
 		m_LastMove = exit->m_OppositeName;
 	}
+
 	cout << "\nYou take direction " << exit->GetNameFrom(dynamic_cast<Room*>(m_Parent)) << "...\n";
 	ChangeParentTo(exit->GetDestinationFrom(dynamic_cast<Room*>(m_Parent)));
+
+	// Need headlantern to use Look()
 	if (m_Helmet == nullptr && dynamic_cast<Room*>(m_Parent)->m_RoomType == RoomType::OCEAN)
 	{
 		cout << "\nIt's very dark you can't see anything.\n";
@@ -132,6 +136,8 @@ void Player::Talk(const vector<string>& args)
 
 bool Player::Take(const vector<string>& args)
 {
+
+	// Take item from room
 	if (args.size() == 2)
 	{
 		Item* item = dynamic_cast<Item*>(m_Parent->Find(args[1], ITEM));
@@ -146,12 +152,15 @@ bool Player::Take(const vector<string>& args)
 		item->ChangeParentTo(this);
 		return true;
 	}
+	// Take item from other item or from room
 	else
 	{
-		Item* item1 = dynamic_cast<Item*>(m_Parent->Find(args[3], ITEM));
+		// Item in room
+		Entity* item1 = dynamic_cast<Entity*>(m_Parent->Find(args[3], ITEM));
 		if (item1 == nullptr)
 		{
-			item1 = dynamic_cast<Item*>(m_Parent->Find(args[3], ITEM));
+			// Item in other item
+			item1 = dynamic_cast<Entity*>(Find(args[3], ITEM));
 			if (item1 == nullptr)
 			{
 				cout << "\nThere is no item here with name " << args[3] <<".\n";

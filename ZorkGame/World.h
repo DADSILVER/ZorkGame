@@ -33,6 +33,7 @@ public:
 	void GameLoop();
 	bool IsGameFinished() const;
 	bool IsInCombat() const;
+	bool Help() const;
 
 private:
 	World();

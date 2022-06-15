@@ -37,14 +37,14 @@ World::World()
 
 
 	//Create Exits
-	Exit* cptRoomHall = new Exit("south", "north", "Door", cptRoom, hall);
-	Exit* hallCrewRoom = new Exit("south", "north", "Door", hall, crewRoom);
-	Exit* hallWorkRoom = new Exit("west", "east", "Little path", hall, workRoom);
+	Exit* cptRoomHall = new Exit("south", "north", "door", cptRoom, hall);
+	Exit* hallCrewRoom = new Exit("south", "north", "door", hall, crewRoom);
+	Exit* hallWorkRoom = new Exit("west", "east", "door with card reader", hall, workRoom);
 	hallWorkRoom->m_Locked = true;
-	Exit* hallChD1 = new Exit("east", "west", "Door", hall, chD1);
-	Exit* ocenaChD1 = new Exit("west", "east", "Robust door", ocean1, chD1);
-	Exit* ocenaChD2 = new Exit("north", "south", "Robust door", ocean1, chD2);
-	Exit* infirmaryChD2 = new Exit("south", "north", "Little path", infirmary, chD2);
+	Exit* hallChD1 = new Exit("east", "west", "door", hall, chD1);
+	Exit* ocenaChD1 = new Exit("west", "east", "robust door", ocean1, chD1);
+	Exit* ocenaChD2 = new Exit("north", "south", "robust door", ocean1, chD2);
+	Exit* infirmaryChD2 = new Exit("south", "north", "door", infirmary, chD2);
 	
 
 	//Add Exits
@@ -175,6 +175,33 @@ bool World::IsInCombat() const
 	return m_Player->m_CombatTarget != nullptr;
 }
 
+bool World::Help() const
+{
+	cout << "\n\nExample: \n";
+	cout << "'Look' or 'l' to see the room.\n";
+	cout << "'Look [something]' or 'l [something]' to see [something] name and description.\n";
+	cout << "'[orientation]' or 'go [orientation]' player go to the [orientation].\n";
+	cout << "'back', 'b' or 'go back' player go to the previous room.\n";
+	cout << "'stats' or 'st' to see player stats.\n";
+	cout << "'inventory' or 'i' to see player inventory.\n";
+	cout << "'stats' or 'st' to see player stats.\n";
+	cout << "'inventory' or 'i' to see player inventory.\n";
+	cout << "'take [item]' or 'pick [item]' player take the [item] form the room.\n";
+	cout << "'take [item] from [item]' or 'pick [item] from [item]' player take the [item] from other [item].\n";
+	cout << "'drop [item]' or 'put [item]' player drop the object in the room.\n";
+	cout << "'drop [item] from [item]' or 'put [item] from [item]' player drop the [item] in other [item].\n";
+	cout << "'equip [item]' or 'eq [item]' player equip the [item] to the player.\n";
+	cout << "'unequip [item]' or 'uneq [item]' player unequip the [item] to the player.\n";
+	cout << "'attack [Creature]' or 'at [Creature]' player attack the [Creature].\n";
+	cout << "'loot [Creature]' or 'lt [Creature]' player take all the [items] from the [Creature].\n";
+	cout << "'talk to [NPC]' player talk to the [NPC].\n";
+	cout << "'unlock [orientation] with [item]' or 'unlk [orientation] with [item]' player unlock the [orientation] with the [item].\n";
+	cout << "'lock [orientation] with [item]' or 'lk [orientation] with [item]' player lock the [orientation] with the [item].\n";
+	cout << "'give [item] to [NPC]' or 'g [item] to [NPC]' player give the [item] to the [NPC].\n\n";
+	
+	return true;
+}
+
 bool World::ParseCommand(vector<string>& args)
 {
 	bool ret = true;
@@ -186,7 +213,11 @@ bool World::ParseCommand(vector<string>& args)
 	{
 		case 1: // commands with no arguments ------------------------------
 		{
-			if (Same(args[0], "look") || Same(args[0], "l"))
+			if (Same(args[0], "help") || Same(args[0], "h"))
+			{
+				Help();
+			}
+			else if (Same(args[0], "look") || Same(args[0], "l"))
 			{
 				m_Player->Look(args);
 			}

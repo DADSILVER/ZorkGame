@@ -93,7 +93,8 @@ bool Creature::Take(const vector<string>& args)
 		return false;
 	}
 
-	if(args.size() == 2)
+	// Take item from room
+	if (args.size() == 2)
 	{
 		Item* item = dynamic_cast<Item*>(m_Parent->Find(args[1], ITEM));
 
@@ -107,29 +108,32 @@ bool Creature::Take(const vector<string>& args)
 		item->ChangeParentTo(this);
 		return true;
 	}
+	// Take item from other item or from room
 	else
 	{
-		Item* item1 = dynamic_cast<Item*>(m_Parent->Find(args[3], ITEM));
+		// Item in room
+		Entity* item1 = dynamic_cast<Entity*>(m_Parent->Find(args[3], ITEM));
 		if (item1 == nullptr)
 		{
-			item1 = dynamic_cast<Item*>(Find(args[3], ITEM));
+			// Item in other item
+			item1 = dynamic_cast<Entity*>(Find(args[3], ITEM));
 			if (item1 == nullptr)
 			{
-				cout << "\nThere is no item here with that name.\n";
+				cout << "\nThere is no item here with name " << args[3] << ".\n";
 				return false;
 			}
-		}	
+		}
 
 		Item* item2 = dynamic_cast<Item*>(item1->Find(args[1], ITEM));
 
 
 		if (item2 == nullptr)
 		{
-			cout << "\nThere is no item here with that name.\n";
+			cout << "\nThere is no item here with name " << args[1] << ".\n";
 			return false;
 		}
 
-		cout << "\nYou take " << args[1] << " from " << args[3] <<".\n";
+		cout << "\nYou take " << args[1] << " from " << args[3] << ".\n";
 		item2->ChangeParentTo(this);
 		return true;
 	}
@@ -139,6 +143,7 @@ bool Creature::Take(const vector<string>& args)
 
 bool Creature::Drop(const vector<string>& args)
 {
+	// Drop item in room
 	if (args.size() == 2) 
 	{
 		Item* item = dynamic_cast<Item*>(Find(args[1], ITEM));
@@ -171,6 +176,7 @@ bool Creature::Drop(const vector<string>& args)
 
 		return true;
 	}
+	// Drop item in other item
 	else
 	{
 		Item* item1 = dynamic_cast<Item*>( m_Parent->Find(args[3], ITEM));
@@ -335,6 +341,8 @@ void Creature::Tick()
 		}
 	}
 	/*
+	* Random state of combat (disable)
+	* 
 	if (IsAlive() && PlayerInRoom() && m_CombatTarget == nullptr)
 	{
 		if ((rand() % 100) < m_AggreLevel) {
@@ -575,8 +583,6 @@ int Creature::ReceiveAttack(int damage)
 
 	return received;
 }
-
-
 
 void Creature::DoDamage(int dmg)
 {

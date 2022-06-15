@@ -19,7 +19,6 @@ Room::~Room()
 {
 }
 
-
 void Room::Look(const vector<string>& args) const
 {
 
@@ -63,7 +62,7 @@ void Room::Look(const vector<string>& args) const
 		if ((*it)->m_Type == EXIT)
 		{
 			Exit* ex = (Exit*)*it;
-			cout << "\nDirection (" << ex->GetNameFrom(this) << ") you see " << ex->GetDestinationFrom(this)->m_Name;
+			cout << "\nDirection (" << ex->GetNameFrom(this) << ") you see " << ex->GetDestinationFrom(this)->m_Name << " " << ex->m_Description;
 		}
 	}
 

@@ -19,9 +19,9 @@ void Item::Look(const vector<string>& args) const
 	cout << "\n" << m_Name << ", ";
 	cout << m_Description << "\n";
 
+	// Find if the item contains other items
 	list<Entity*> stuff;
 	FindAll(ITEM, stuff);
-
 	if (stuff.size() > 0)
 	{
 		cout << "It contains: " << "\n";

@@ -25,12 +25,12 @@ void Entity::Tick()
 
 void Entity::ChangeParentTo(Entity * newParent)
 {
-	if (m_Parent != NULL)
+	if (m_Parent != nullptr)
 		m_Parent->m_Contains.remove(this);
 
 	m_Parent = newParent;
 
-	if (m_Parent != NULL)
+	if (m_Parent != nullptr)
 		m_Parent->m_Contains.push_back(this);
 }
 
@@ -55,7 +55,6 @@ bool Entity::Find(Entity* entity) const
 						return true;
 		}
 	}
-
 	return false;
 }
 
