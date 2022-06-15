@@ -18,16 +18,17 @@ class Player;
 class World
 {
 public:
-	static World* getInstance()
+	static World& getInstance()
 	{		
-		static World*  m_instance = new World();
+		static World  m_instance;
 		return m_instance;
 	}
 
 public:
-	~World();
 	World(World const&) = delete;
 	void operator=(World const&) = delete;
+	
+	~World();
 	bool Tick(vector<string>& args);
 	bool ParseCommand(vector<string>& args);
 	void GameLoop();

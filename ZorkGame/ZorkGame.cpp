@@ -16,17 +16,19 @@ int main()
 	args.reserve(10);
 
 	cout << "Welcome to MyZork!\n" ;
-	cout << "----------------";
+	cout << "----------------\n";
+	cout << "You are the captain of an underwater base located in the depths of the Mariana Trench, that studies algae and living beings in the area. Together with your colleagues, Dolores and Jonny, you have discovered an algae that may have the ability to cure cancer. While you are sleeping peacefully in your cabin, you hear a loud noise and screams of 'HELP!' that seems to come from the crew room.\n";
 
-	World* myWorld = World::getInstance();
+	cout << "\nFrom here, your story begins : \n\n";
+
 
 	args.push_back("look");
-
+	cout << "----------------\n";
 	cout << "Type help to see all the actions\n";
 	cout << "----------------\n";
 	while (1)
 	{
-		if (_kbhit() != 0 && !myWorld->IsInCombat())
+		if (_kbhit() != 0 && !World::getInstance().IsInCombat())
 		{
 			key = _getch();
 			if (key == '\b') // backspace
@@ -49,7 +51,7 @@ int main()
 				Tokenize(player_input, args);
 		}
 
-		if (myWorld->IsGameFinished()) 
+		if (World::getInstance().IsGameFinished())
 		{
 			break;
 		}
@@ -57,7 +59,7 @@ int main()
 		if (args.size() > 0 && Same(args[0], "quit"))
 			break;
 
-		if (myWorld->Tick(args) == false)
+		if (World::getInstance().Tick(args) == false)
 			cout << "\nSorry, I do not understand your command.\n";
 
 		if (args.size() > 0)
@@ -68,7 +70,6 @@ int main()
 		}
 	}
 	cout << "\nThanks for playing, Bye!\n";
-	delete myWorld;
-	return 0;
-    
+	
+	return 0; 
 }
