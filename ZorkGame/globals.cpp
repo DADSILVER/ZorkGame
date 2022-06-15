@@ -2,22 +2,22 @@
 #include "globals.h"
 
 
-bool Same(const string& a, const string& b)
+bool globals::Same(const string& a, const string& b)
 {
     return _stricmp(a.c_str(), b.c_str()) == 0;
 }
 
-bool Same(const char* a, const string& b)
+bool globals::Same(const char* a, const string& b)
 {
 	return _stricmp(a, b.c_str()) == 0;
 }
 
-bool Same(const string& a, const char* b)
+bool globals::Same(const string& a, const char* b)
 {
 	return _stricmp(a.c_str(), b) == 0;
 }
 
-int Roll(int min, int max)
+int globals::Roll(int min, int max)
 {
 	if (max == 0)
 	{
@@ -31,7 +31,7 @@ int Roll(int min, int max)
 	return rand() % max + min;
 }
 
-void Tokenize(const string& line, vector<string>& arguments)
+void globals::Tokenize(const string& line, vector<string>& arguments)
 {
 	const char* str = line.c_str();
 

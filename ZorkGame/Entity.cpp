@@ -62,7 +62,7 @@ Entity* Entity::Find(const string& name, EntityType type) const
 {
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it)
 	{
-		if ((*it)->m_Type == type && Same((*it)->m_Name,name))
+		if ((*it)->m_Type == type && globals::Same((*it)->m_Name,name))
 		{
 			return *it;
 		}

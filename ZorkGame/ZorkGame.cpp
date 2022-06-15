@@ -48,7 +48,7 @@ int main()
 				cout << key;
 			}
 			else
-				Tokenize(player_input, args);
+				globals::Tokenize(player_input, args);
 		}
 
 		if (World::getInstance().IsGameFinished())
@@ -56,7 +56,7 @@ int main()
 			break;
 		}
 
-		if (args.size() > 0 && Same(args[0], "quit"))
+		if (args.size() > 0 && globals::Same(args[0], "quit"))
 		{
 			break;
 		}

@@ -78,7 +78,7 @@ Exit* Room::GetExit(const string& direction) const
 		if ((*it)->m_Type == EXIT)
 		{
 			Exit* ex = dynamic_cast<Exit*>(*it);
-			if (Same(ex->GetNameFrom(this), direction))
+			if (globals::Same(ex->GetNameFrom(this), direction))
 				return ex;
 		}
 	}

@@ -7,7 +7,7 @@
 #include "globals.h"
 
 Player::Player(const char* name, const char* description, Room* room, int hitPoints):
-Creature(name, description, room, hitPoints, hitPoints, 0), m_InvalidAction(false), m_LastMove("back"), m_IsMissionDone(false)
+Creature(name, description, room, hitPoints, 0), m_InvalidAction(false), m_LastMove("back"), m_IsMissionDone(false)
 {
 	m_Type = PLAYER;
 }
@@ -25,7 +25,7 @@ void Player::Look(const vector<string>& args) const
 	}
 	else 
 	{ 
-		if(Same(args[1],"me"))
+		if(globals::Same(args[1],"me"))
 		{
 			cout << "\n" << m_Name << ", " << m_Description << "\n";
 			Inventory();
@@ -62,7 +62,7 @@ void Player::Look(const vector<string>& args) const
 				return;
 			}
 
-			if (Same("room", args[1]))
+			if (globals::Same("room", args[1]))
 			{
 				m_Parent->Look(args);
 				return;
@@ -188,7 +188,7 @@ void Player::Tick()
 {
 	if (m_InvalidAction)
 	{
-		DoDamage(2);
+		TakeDamage(2);
 		m_InvalidAction = false;
 	}
 
@@ -256,14 +256,14 @@ bool Player::CanDoAction(const vector<string>& args) const
 		{
 			if (args.size() == 1)
 			{
-				if (!(Same(args[0], "back") || Same(args[0], "b")))
+				if (!(globals::Same(args[0], "back") || globals::Same(args[0], "b")))
 				{
 					return false;
 				}
 			}
 			else if(args.size() == 2)
 			{
-				if (!(Same(args[0], "go") || Same(args[1], "back")))
+				if (!(globals::Same(args[0], "go") || globals::Same(args[1], "back")))
 				{	
 					return false;
 				}

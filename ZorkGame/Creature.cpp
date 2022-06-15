@@ -504,7 +504,7 @@ int Creature::MakeAttack()
 		return 0;
 	}
 	
-	int result = Roll(m_MinDamage, m_MaxDamage);
+	int result = globals::Roll(m_MinDamage, m_MaxDamage);
 
 	if (PlayerInRoom())
 	{
@@ -563,7 +563,7 @@ bool Creature::Loot(const vector<string>& args)
 
 int Creature::ReceiveAttack(int damage)
 {
-	int prot = Roll(m_MinProtection, m_MaxProtection);
+	int prot = globals::Roll(m_MinProtection, m_MaxProtection);
 	int received = damage - prot;
 
 	if (received < 0)

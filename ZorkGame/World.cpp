@@ -130,13 +130,6 @@ bool World::Tick(vector<string>& args)
 		ret = ParseCommand(args);
 	}
 
-	GameLoop();
-
-	return ret;
-}
-
-void World::GameLoop()
-{
 	clock_t now = clock();
 
 	if ((now - tick_timer) / CLOCKS_PER_SEC > TICK_FREQUENCY)
@@ -148,6 +141,8 @@ void World::GameLoop()
 
 		tick_timer = now;
 	}
+
+	return ret;
 }
 
 bool World::IsGameFinished() const
@@ -188,7 +183,6 @@ void World::Help() const
 	cout << "'lock [orientation] with [item]' or 'lk [orientation] with [item]' player lock the [orientation] with the [item].\n";
 	cout << "'give [item] to [NPC]' or 'g [item] to [NPC]' player give the [item] to the [NPC].\n\n";
 	
-	return true;
 }
 
 bool World::ParseCommand(vector<string>& args)
@@ -202,44 +196,44 @@ bool World::ParseCommand(vector<string>& args)
 	{
 		case 1: // commands with no arguments ------------------------------
 		{
-			if (Same(args[0], "help") || Same(args[0], "h"))
+			if (globals::Same(args[0], "help") || globals::Same(args[0], "h"))
 			{
 				Help();
 			}
-			else if (Same(args[0], "look") || Same(args[0], "l"))
+			else if (globals::Same(args[0], "look") || globals::Same(args[0], "l"))
 			{
 				m_Player->Look(args);
 			}
-			else if (Same(args[0], "back") || Same(args[0], "b"))
+			else if (globals::Same(args[0], "back") || globals::Same(args[0], "b"))
 			{
 				args.push_back(m_Player->m_LastMove);
 				m_Player->Go(args);
 			}
-			else if (Same(args[0], "north") || Same(args[0], "n"))
+			else if (globals::Same(args[0], "north") || globals::Same(args[0], "n"))
 			{
 				args.push_back("north");
 				m_Player->Go(args);
 			}
-			else if (Same(args[0], "south") || Same(args[0], "s"))
+			else if (globals::Same(args[0], "south") || globals::Same(args[0], "s"))
 			{
 				args.push_back("south");
 				m_Player->Go(args);
 			}
-			else if (Same(args[0], "east") || Same(args[0], "e"))
+			else if (globals::Same(args[0], "east") || globals::Same(args[0], "e"))
 			{
 				args.push_back("east");
 				m_Player->Go(args);
 			}
-			else if (Same(args[0], "west") || Same(args[0], "w"))
+			else if (globals::Same(args[0], "west") || globals::Same(args[0], "w"))
 			{
 				args.push_back("west");
 				m_Player->Go(args);
 			}
-			else if (Same(args[0], "stats") || Same(args[0], "st"))
+			else if (globals::Same(args[0], "stats") || globals::Same(args[0], "st"))
 			{
 				m_Player->Stats();
 			}
-			else if (Same(args[0], "inventory") || Same(args[0], "i"))
+			else if (globals::Same(args[0], "inventory") || globals::Same(args[0], "i"))
 			{
 				m_Player->Inventory();
 			}
@@ -249,39 +243,39 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		case 2: // commands with one argument ------------------------------
 		{
-			if (Same(args[0], "look") || Same(args[0], "l"))
+			if (globals::Same(args[0], "look") || globals::Same(args[0], "l"))
 			{
 				m_Player->Look(args);
 			}
-			else if (Same(args[0], "go"))
+			else if (globals::Same(args[0], "go"))
 			{
-				if (Same(args[1], "back"))
+				if (globals::Same(args[1], "back"))
 				{
 					args[1] = m_Player->m_LastMove;
 				}
 				m_Player->Go(args);
 			}
-			else if (Same(args[0], "take") || Same(args[0], "pick"))
+			else if (globals::Same(args[0], "take") || globals::Same(args[0], "pick"))
 			{
 				m_Player->Take(args);
 			}
-			else if (Same(args[0], "drop") || Same(args[0], "put"))
+			else if (globals::Same(args[0], "drop") || globals::Same(args[0], "put"))
 			{
 				m_Player->Drop(args);
 			}
-			else if (Same(args[0], "equip") || Same(args[0], "eq"))
+			else if (globals::Same(args[0], "equip") || globals::Same(args[0], "eq"))
 			{
 				m_Player->Equip(args);
 			}
-			else if (Same(args[0], "unequip") || Same(args[0], "uneq"))
+			else if (globals::Same(args[0], "unequip") || globals::Same(args[0], "uneq"))
 			{
 				m_Player->UnEquip(args);
 			}
-			else if (Same(args[0], "attack") || Same(args[0], "at"))
+			else if (globals::Same(args[0], "attack") || globals::Same(args[0], "at"))
 			{
 				m_Player->Attack(args);
 			}
-			else if (Same(args[0], "loot") || Same(args[0], "lt"))
+			else if (globals::Same(args[0], "loot") || globals::Same(args[0], "lt"))
 			{
 				m_Player->Loot(args);
 			}
@@ -291,7 +285,7 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		case 3: // commands with two arguments ------------------------------
 		{
-			if (Same(args[0], "talk") || Same(args[0], "t"))
+			if (globals::Same(args[0], "talk") || globals::Same(args[0], "t"))
 			{
 				m_Player->Talk(args);
 			}
@@ -301,23 +295,23 @@ bool World::ParseCommand(vector<string>& args)
 		}
 		case 4: // commands with three arguments ------------------------------
 		{
-			if (Same(args[0], "unlock") || Same(args[0], "unlk"))
+			if (globals::Same(args[0], "unlock") || globals::Same(args[0], "unlk"))
 			{
 				m_Player->Unlock(args);
 			}
-			else if (Same(args[0], "lock") || Same(args[0], "lk"))
+			else if (globals::Same(args[0], "lock") || globals::Same(args[0], "lk"))
 			{
 				m_Player->Lock(args);
 			}
-			else if (Same(args[0], "take") || Same(args[0], "pick"))
+			else if (globals::Same(args[0], "take") || globals::Same(args[0], "pick"))
 			{
 				m_Player->Take(args);
 			}
-			else if (Same(args[0], "drop") || Same(args[0], "put"))
+			else if (globals::Same(args[0], "drop") || globals::Same(args[0], "put"))
 			{
 				m_Player->Drop(args);
 			}
-			else if (Same(args[0], "give") || Same(args[0], "g"))
+			else if (globals::Same(args[0], "give") || globals::Same(args[0], "g"))
 			{
 				m_Player->Give(args);
 			}

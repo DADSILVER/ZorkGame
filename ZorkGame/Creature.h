@@ -35,7 +35,7 @@ public:
 	int ReceiveAttack(int damage);
 	void TakeDamage(int dmg);
 
-	inline Room* GetRoom() const { return dynamic_cast<Room*>(m_Parent); };
+	inline Room* GetRoom() const { return (Room*)(m_Parent); };
 	inline bool PlayerInRoom() const { return m_Parent->Find(PLAYER) != nullptr; };
 	inline bool IsAlive() const { return m_HitPoints > 0; };
 
