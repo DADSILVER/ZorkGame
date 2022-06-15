@@ -63,7 +63,7 @@ World::World()
 	jonny->m_HitPoints = 10;
 	jonny->m_MaxDamage = 3;
 	NPC* dolores = new NPC("Dolores", "Plant researcher.", crewRoom, nullptr);
-	dolores->m_State = "Trying to healt Jonny";
+	dolores->m_State = "Trying to treat Jonny";
 	dolores->m_Dialog = "I need more bandages. There is no more in the first aid kit. Go to the infirmary. HURRY UP!!!!";
 	dolores->m_Talkable = true;
 	dolores->m_HitPoints = 15;
@@ -78,7 +78,7 @@ World::World()
 	Creature* stranger = new Creature("Stranger", "Injured suspicious person.", infirmary, 5);
 	stranger->m_HitPoints = 14;
 	stranger->m_MaxDamage = 2;
-	Creature* eel = new Creature("Eel", "can be aggressive", hall,30);
+	Creature* eel = new Creature("Eel", "can be aggressive", ocean1,30);
 	eel->m_HitPoints = 15;
 	eel->m_MaxDamage = 3;
 	
@@ -111,7 +111,7 @@ World::World()
 	m_Entities.push_back(bandages);
 
 	// Add palyer
-	m_Player = new Player("Captian", "You are the captain of the place.", cptRoom);
+	m_Player = new Player("Captain", "You are the captain of the place.", cptRoom);
 	m_Player->m_HitPoints = 30;
 	m_Player->m_MaxDamage = 3;
 	m_Entities.push_back(m_Player);
