@@ -20,9 +20,6 @@ Creature::Creature(const char* name, const char* description, Room* room, int hi
 	m_AggreLevel = aggreLevel;
 }
 
-Creature::~Creature()
-{}
-
 bool Creature::Go(const vector<string>& args)
 {
 	if (!IsAlive())
@@ -338,6 +335,14 @@ void Creature::Tick()
 		else
 		{
 			m_CombatTarget = nullptr;
+		}
+	}
+
+	for (list<Entity*>::iterator it = m_Contains.begin(); it != m_Contains.end(); ++it)
+	{
+		if ((*it)->m_Type != EXIT)
+		{
+			(*it)->Tick();
 		}
 	}
 	/*

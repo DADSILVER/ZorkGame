@@ -17,6 +17,17 @@ Room::Room(const char* name, const char* description, const RoomType roomType) :
 
 Room::~Room()
 {
+	for (list<Entity*>::iterator it = m_Contains.begin(); it != m_Contains.end(); ++it)
+	{
+		if ((*it)->m_Type != EXIT)
+		{
+			cout << m_Name << "\n";
+
+			delete* it;
+		}
+	}
+
+	m_Contains.clear();
 }
 
 void Room::Look(const vector<string>& args) const

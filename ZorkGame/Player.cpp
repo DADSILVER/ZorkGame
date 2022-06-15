@@ -12,10 +12,6 @@ Creature(name, description, room, hitPoints, 0), m_InvalidAction(false), m_LastM
 	m_Type = PLAYER;
 }
 
-Player::~Player()
-{
-}
-
 void Player::Look(const vector<string>& args) const
 {
 	if (args.size() == 1) 
@@ -200,6 +196,13 @@ void Player::Tick()
 		else
 		{
 			m_CombatTarget = nullptr;
+		}
+	}
+	for (list<Entity*>::iterator it = m_Contains.begin(); it != m_Contains.end(); ++it)
+	{
+		if ((*it)->m_Type != EXIT)
+		{
+			(*it)->Tick();
 		}
 	}
 }

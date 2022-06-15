@@ -15,8 +15,6 @@ class Creature :
 {
 public:
 	Creature(const char* name, const char* description, Room* room, int hitPoints, int aggreLevel);
-	~Creature();
-
 	virtual bool Go(const vector<string>& args);
 	virtual void Look(const vector<string>& args) const override;
 	virtual bool Take(const vector<string>& args);

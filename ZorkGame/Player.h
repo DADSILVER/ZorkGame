@@ -10,8 +10,6 @@ class Player :
 {
 public:
 	Player(const char* name, const char* description, Room* room, int hitPoints);
-	~Player();
-
 	bool Go(const vector<string>& args) override;
 	void Talk(const vector<string>& args);
 	void Look(const vector<string>& args) const override;

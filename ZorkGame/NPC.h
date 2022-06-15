@@ -5,8 +5,6 @@ class NPC :
 {
 public:
     NPC(const char* name, const char* description, Room* room, Item* item, int hitPoints);
-    ~NPC();
-
     void Look(const vector<string>& args) const override;
 
     void talk();

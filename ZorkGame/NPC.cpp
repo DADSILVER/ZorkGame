@@ -15,10 +15,6 @@ NPC::NPC(const char* name, const char* description, Room* room, Item* item, int 
 
 }
 
-NPC::~NPC()
-{
-}
-
 void NPC::Look(const vector<string>& args) const
 {
 	if (IsAlive())

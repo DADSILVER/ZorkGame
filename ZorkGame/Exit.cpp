@@ -16,6 +16,10 @@ Exit::~Exit()
 {
 }
 
+void Exit::Tick()
+{
+}
+
 void Exit::Look(const vector<string>& args) const
 {
 	cout << m_Name << " to " << m_OppositeName << "\n";

@@ -66,8 +66,8 @@ World::World()
 	dolores->m_MaxDamage = 3;
 
 	//Add NPCs
-	m_Entities.push_back(jonny);
-	m_Entities.push_back(dolores);
+	//m_Entities.push_back(jonny);
+	//m_Entities.push_back(dolores);
 
 	
 	// Create creatures
@@ -78,8 +78,8 @@ World::World()
 	
 
 	//Add NPCs
-	m_Entities.push_back(stranger);
-	m_Entities.push_back(eel);
+	//m_Entities.push_back(stranger);
+	//m_Entities.push_back(eel);
 
 
 	// Create Items
@@ -97,17 +97,17 @@ World::World()
 	dolores->m_MissionItem = bandages;
 
 	//Add Items
-	m_Entities.push_back(key);
-	m_Entities.push_back(box);
-	m_Entities.push_back(knife);
-	m_Entities.push_back(divingSuit);
-	m_Entities.push_back(headLantern);
-	m_Entities.push_back(bandages);
+	//m_Entities.push_back(key);
+	//m_Entities.push_back(box);
+	//m_Entities.push_back(knife);
+	//m_Entities.push_back(divingSuit);
+	//m_Entities.push_back(headLantern);
+	//m_Entities.push_back(bandages);
 
 	// Add palyer
 	m_Player = new Player("Captain", "You are the captain of the place.", cptRoom, 30);
 	m_Player->m_MaxDamage = 3;
-	m_Entities.push_back(m_Player);
+	//m_Entities.push_back(m_Player);
 
 }
 
@@ -115,6 +115,7 @@ World::~World()
 {
 	for (list<Entity*>::iterator it = m_Entities.begin(); it != m_Entities.end(); ++it)
 	{
+		cout << (*it)->m_Name<<"\n";
 		delete* it;
 	}
 

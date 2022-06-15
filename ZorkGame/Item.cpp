@@ -10,10 +10,6 @@ Item::Item(const char* name, const char* description, Entity* parent, ItemType i
 	m_MinValue=0;
 }
 
-Item::~Item()
-{
-}
-
 void Item::Look(const vector<string>& args) const
 {
 	cout << "\n" << m_Name << ", ";

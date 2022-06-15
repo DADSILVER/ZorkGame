@@ -7,12 +7,25 @@ Entity::Entity(const char* name, const char* description, Entity* parent) :
 {
 	m_Type = ENTITY;
 
-	if (parent != NULL)
+	if (parent != nullptr) 
+	{
 		parent->m_Contains.push_back(this);
+	}
 }
 
 Entity::~Entity()
-{}
+{
+	for (list<Entity*>::iterator it = m_Contains.begin(); it != m_Contains.end(); ++it)
+	{
+		if ((*it)->m_Type != EXIT)
+		{
+			cout << m_Name <<"\n";
+			delete* it;
+		}
+	}
+
+	m_Contains.clear();
+}
 
 void Entity::Look(const vector<string>& args) const
 {
@@ -21,7 +34,15 @@ void Entity::Look(const vector<string>& args) const
 }
 
 void Entity::Tick()
-{}
+{
+	for (list<Entity*>::iterator it = m_Contains.begin(); it != m_Contains.end(); ++it)
+	{
+		if ((*it)->m_Type != EXIT)
+		{
+			(*it)->Tick();
+		}
+	}
+}
 
 void Entity::ChangeParentTo(Entity * newParent)
 {
