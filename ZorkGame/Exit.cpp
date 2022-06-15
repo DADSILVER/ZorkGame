@@ -3,7 +3,7 @@
 #include "Exit.h"
 
 Exit::Exit(const char* name, const char* oppositeName, const char* description, Room* origin, Room* destination, bool oneWay) :
-	Entity(name, description, (Entity*)origin),
+	Entity(name, description, dynamic_cast<Entity*>(origin)),
 	m_Closed(false), m_Locked(false), m_Key(NULL), m_OneWay(oneWay), m_Destination(destination), m_OppositeName(oppositeName)
 {
 	m_Type = EXIT;

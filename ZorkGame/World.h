@@ -18,10 +18,16 @@ class Player;
 class World
 {
 public:
+	static World* getInstance()
+	{		
+		static World*  m_instance = new World();
+		return m_instance;
+	}
 
-	World();
+public:
 	~World();
-
+	World(World const&) = delete;
+	void operator=(World const&) = delete;
 	bool Tick(vector<string>& args);
 	bool ParseCommand(vector<string>& args);
 	void GameLoop();
@@ -29,7 +35,11 @@ public:
 	bool IsInCombat() const;
 
 private:
+	World();
 
+private:
+
+	
 	clock_t tick_timer;
 	list<Entity*> m_Entities;
 	Player* m_Player;

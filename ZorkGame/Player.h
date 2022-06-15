@@ -18,10 +18,10 @@ public:
 	bool Take(const vector<string>& args) override;
 	void Tick() override;
 	void Died() const override;
-	virtual bool IsMisionDone() const;
+	bool IsMisionDone() const;
 	void Give(const vector<string>& args);
-	virtual bool CanDoAction(const vector<string>& args) const;
-	virtual bool CantSee();
+	bool CanDoAction(const vector<string>& args) const;
+	bool CantSee();
 	
 
 public:

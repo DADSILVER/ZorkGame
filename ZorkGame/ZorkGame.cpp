@@ -18,13 +18,13 @@ int main()
 	cout << "Welcome to MyZork!\n" ;
 	cout << "----------------\n";
 
-	World myWorld;
+	World* myWorld = World::getInstance();
 
 	args.push_back("look");
 
 	while (1)
 	{
-		if (_kbhit() != 0 && !myWorld.IsInCombat())
+		if (_kbhit() != 0 && !myWorld->IsInCombat())
 		{
 			key = _getch();
 			if (key == '\b') // backspace
@@ -47,7 +47,7 @@ int main()
 				Tokenize(player_input, args);
 		}
 
-		if (myWorld.IsGameFinished()) 
+		if (myWorld->IsGameFinished()) 
 		{
 			break;
 		}
@@ -55,7 +55,7 @@ int main()
 		if (args.size() > 0 && Same(args[0], "quit"))
 			break;
 
-		if (myWorld.Tick(args) == false)
+		if (myWorld->Tick(args) == false)
 			cout << "\nSorry, I do not understand your command.\n";
 
 		if (args.size() > 0)
@@ -66,6 +66,7 @@ int main()
 		}
 	}
 	cout << "\nThanks for playing, Bye!\n";
+	delete myWorld;
 	return 0;
     
 }

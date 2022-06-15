@@ -36,28 +36,28 @@ void Player::Look(const vector<string>& args) const
 		else
 		{
 			Entity* entity = m_Parent->Find(args[1], NPCAlly);
-			if (entity != NULL) 
+			if (entity != nullptr)
 			{
 				entity->Look(args);
 				return;
 			}
 
 			entity = m_Parent->Find(args[1], CREATURE);
-			if (entity != NULL) 
+			if (entity != nullptr)
 			{
 				entity->Look(args);
 				return;
 			}
 
 			entity = Find(args[1], ITEM);
-			if (entity != NULL) 
+			if (entity != nullptr)
 			{
 				entity->Look(args);
 				return;
 			}
 
 			entity = m_Parent->Find(args[1], ITEM);
-			if (entity != NULL) 
+			if (entity != nullptr)
 			{
 				entity->Look(args);
 				return;
@@ -79,7 +79,7 @@ bool Player::Go(const vector<string>& args)
 {
 	Exit* exit = GetRoom()->GetExit(args[1]);
 	
-	if (exit == NULL) {
+	if (exit == nullptr) {
 		cout << "\nThere is no exit at '" << args[1] << "'.\n";
 		return false;
 	}

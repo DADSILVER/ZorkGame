@@ -9,7 +9,7 @@ public:
 
     void Look(const vector<string>& args) const override;
 
-    virtual void talk();
+    void talk();
 
 public:
     

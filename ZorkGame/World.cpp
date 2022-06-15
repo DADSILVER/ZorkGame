@@ -123,7 +123,6 @@ World::~World()
 	for (list<Entity*>::iterator it = m_Entities.begin(); it != m_Entities.end(); ++it)
 	{
 		delete* it;
-
 	}
 
 	m_Entities.clear();

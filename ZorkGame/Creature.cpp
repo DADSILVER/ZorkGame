@@ -26,17 +26,23 @@ Creature::~Creature()
 bool Creature::Go(const vector<string>& args)
 {
 	if (!IsAlive())
+	{
 		return false;
+	}
 
 	Exit* exit = GetRoom()->GetExit(args[1]);
 
-	if (exit == NULL)
+	if (exit == nullptr)
+	{
 		return false;
+	}
 
 	if (PlayerInRoom())
+	{
 		cout << m_Name << "goes " << args[1] << "...\n";
+	}
 
-	ChangeParentTo(exit->GetDestinationFrom((Room*)m_Parent));
+	ChangeParentTo(exit->GetDestinationFrom(dynamic_cast<Room*>(m_Parent)));
 
 	return true;
 }
@@ -89,7 +95,7 @@ bool Creature::Take(const vector<string>& args)
 
 	if(args.size() == 2)
 	{
-		Item* item = (Item*)m_Parent->Find(args[1], ITEM);
+		Item* item = dynamic_cast<Item*>(m_Parent->Find(args[1], ITEM));
 
 		if (item == nullptr)
 		{
@@ -103,10 +109,10 @@ bool Creature::Take(const vector<string>& args)
 	}
 	else
 	{
-		Item* item1 = (Item*)m_Parent->Find(args[3], ITEM);
+		Item* item1 = dynamic_cast<Item*>(m_Parent->Find(args[3], ITEM));
 		if (item1 == nullptr)
 		{
-			item1 = (Item*)this->Find(args[3], ITEM);
+			item1 = dynamic_cast<Item*>(Find(args[3], ITEM));
 			if (item1 == nullptr)
 			{
 				cout << "\nThere is no item here with that name.\n";
@@ -114,7 +120,7 @@ bool Creature::Take(const vector<string>& args)
 			}
 		}	
 
-		Item* item2 = (Item*)item1->Find(args[1], ITEM);
+		Item* item2 = dynamic_cast<Item*>(item1->Find(args[1], ITEM));
 
 
 		if (item2 == nullptr)
@@ -135,9 +141,9 @@ bool Creature::Drop(const vector<string>& args)
 {
 	if (args.size() == 2) 
 	{
-		Item* item = (Item*)this->Find(args[1], ITEM);
+		Item* item = dynamic_cast<Item*>(Find(args[1], ITEM));
 
-		if (item == NULL || item->m_Parent != this)
+		if (item == nullptr || item->m_Parent != this)
 		{
 			cout << "\nYou don't have this item.\n";
 			return false;
@@ -221,7 +227,7 @@ bool Creature::Equip(const vector<string>& args)
 		return false;
 	}
 
-	Item* item = (Item*)this->Find(args[1], ITEM);
+	Item* item = dynamic_cast<Item*>(Find(args[1], ITEM));
 
 	if (item == nullptr)
 	{
@@ -282,9 +288,9 @@ bool Creature::UnEquip(const vector<string>& args)
 		return false;
 	}
 
-	Item* item = (Item*)this->Find(args[1], ITEM);
+	Item* item = dynamic_cast<Item*>(Find(args[1], ITEM));
 
-	if (item == NULL)
+	if (item == nullptr)
 	{
 		cout << "\nYou don't have this item.\n";
 		return false;
@@ -295,7 +301,7 @@ bool Creature::UnEquip(const vector<string>& args)
 		cout << "\nItem " << m_Name << " unequipped as weapon.\n";
 		m_MaxDamage -= m_Weapon->m_MaxValue;
 		m_MinDamage -= m_Weapon->m_MinValue;
-		m_Weapon = NULL;
+		m_Weapon = nullptr;
 		
 	}
 	else if (item == m_Skin) 
@@ -303,7 +309,7 @@ bool Creature::UnEquip(const vector<string>& args)
 		cout << "\nItem " << m_Name << " unequipped as weapon.\n";
 		m_MaxProtection -= m_Skin->m_MaxValue;
 		m_MinProtection -= m_Skin->m_MinValue;
-		m_Skin = NULL;
+		m_Skin = nullptr;
 		
 	}
 	else
@@ -320,9 +326,13 @@ void Creature::Tick()
 	if (m_CombatTarget != nullptr) 
 	{
 		if (m_Parent->Find(m_CombatTarget) == true)
+		{
 			MakeAttack();
+		}
 		else
+		{
 			m_CombatTarget = nullptr;
+		}
 	}
 	/*
 	if (IsAlive() && PlayerInRoom() && m_CombatTarget == nullptr)
@@ -375,7 +385,7 @@ bool Creature::Unlock(const vector<string>& args) const
 
 	Exit* exit = GetRoom()->GetExit(args[1]);
 
-	if (exit == NULL)
+	if (exit == nullptr)
 	{
 		cout << "\nThere is no exit at '" << args[1] << "'.\n";
 		return false;
@@ -387,9 +397,9 @@ bool Creature::Unlock(const vector<string>& args) const
 		return false;
 	}
 
-	Item* item = (Item*)Find(args[3], ITEM);
+	Item* item = dynamic_cast<Item*>(Find(args[3], ITEM));
 
-	if (item == NULL)
+	if (item == nullptr)
 	{
 		cout << "\nKey '" << args[3] << "' not found in your inventory.\n";
 		return false;
@@ -397,11 +407,11 @@ bool Creature::Unlock(const vector<string>& args) const
 
 	if (exit->m_Key != item)
 	{
-		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->GetNameFrom((Room*)m_Parent) << ".\n";
+		cout << "\nKey '" << item->m_Name << "' is not the key for " << exit->GetNameFrom( dynamic_cast<Room*>( m_Parent)) << ".\n";
 		return false;
 	}
 
-	cout << "\nYou unlock " << exit->GetNameFrom((Room*)m_Parent) << "...\n";
+	cout << "\nYou unlock " << exit->GetNameFrom(dynamic_cast<Room*>(m_Parent)) << "...\n";
 
 	exit->m_Locked = false;
 
@@ -417,7 +427,7 @@ bool Creature::Lock(const vector<string>& args) const
 
 	Exit* exit = GetRoom()->GetExit(args[1]);
 
-	if (exit == NULL)
+	if (exit == nullptr)
 	{
 		cout << "\nThere is no exit at '" << args[1] << "'.\n";
 		return false;
@@ -429,9 +439,9 @@ bool Creature::Lock(const vector<string>& args) const
 		return false;
 	}
 
-	Item* item = (Item*)Find(args[3], ITEM);
+	Item* item = dynamic_cast<Item*>(Find(args[3], ITEM));
 
-	if (item == NULL)
+	if (item == nullptr)
 	{
 		cout << "\nKey '" << args[3] << "' not found in your inventory.\n";
 		return false;
@@ -453,7 +463,7 @@ bool Creature::Lock(const vector<string>& args) const
 bool Creature::Attack(const vector<string>& args)
 {
 	Creature* target = dynamic_cast<Creature*>(m_Parent->Find(args[1], NPCAlly));
-	if (target != NULL)
+	if (target != nullptr)
 	{
 		cout << "\nYou Can't attack your friend.\n";
 		return false;
@@ -461,7 +471,7 @@ bool Creature::Attack(const vector<string>& args)
 	
 	target = dynamic_cast<Creature*>(m_Parent->Find(args[1], CREATURE));
 
-	if (target == NULL)
+	if (target == nullptr)
 	{
 		cout << "\n" << args[1] << " is not here.\n";
 		return false;
@@ -495,7 +505,7 @@ int Creature::MakeAttack()
 
 	m_CombatTarget->ReceiveAttack(result);
 
-	if (m_CombatTarget->m_CombatTarget == NULL)
+	if (m_CombatTarget->m_CombatTarget == nullptr)
 	{
 		m_CombatTarget->m_CombatTarget = this;
 
@@ -511,7 +521,7 @@ bool Creature::Loot(const vector<string>& args)
 {
 	Creature* target = dynamic_cast<Creature*>(m_Parent->Find(args[1], CREATURE));
 
-	if (target == NULL)
+	if (target == nullptr)
 	{
 		cout << "\n" << args[1] << " is not here.\n";
 		return false;
@@ -580,7 +590,7 @@ Room* Creature::GetRoom() const
 
 bool Creature::PlayerInRoom() const
 {
-	return m_Parent->Find(PLAYER) != NULL;
+	return m_Parent->Find(PLAYER) != nullptr;
 }
 
 bool Creature::IsAlive() const

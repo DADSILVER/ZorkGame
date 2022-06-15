@@ -9,7 +9,7 @@
 
 
 Room::Room(const char* name, const char* description, const RoomType roomType) :
-	Entity(name, description, NULL)
+	Entity(name, description, nullptr)
 {
 	m_Type = ROOM;
 	m_RoomType = roomType;
@@ -78,7 +78,7 @@ Exit* Room::GetExit(const string& direction) const
 	{
 		if ((*it)->m_Type == EXIT)
 		{
-			Exit* ex = (Exit*)*it;
+			Exit* ex = dynamic_cast<Exit*>(*it);
 			if (Same(ex->GetNameFrom(this), direction))
 				return ex;
 		}
