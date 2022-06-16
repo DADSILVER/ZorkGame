@@ -21,8 +21,6 @@ Room::~Room()
 	{
 		if ((*it)->m_Type != EXIT)
 		{
-			cout << m_Name << "\n";
-
 			delete* it;
 		}
 	}
@@ -37,44 +35,54 @@ void Room::Look(const vector<string>& args) const
  
 	//NPCs
 
-	cout << "\nNPCs:";
+	list<Entity*> npcs;
+	list<Entity*> creatures;
+	list<Entity*> items;
+	list<Entity*> exits;
+
 	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
 		//NPCs
 
 		if ((*it)->m_Type == NPCAlly)
 		{
-			(*it)->Look(args);
+			npcs.push_back(*it);
 		}
+		if ((*it)->m_Type == CREATURE)
+		{
+			creatures.push_back(*it);
+		}
+		if ((*it)->m_Type == ITEM)
+		{
+			items.push_back(*it);
+		}
+		if ((*it)->m_Type == EXIT)
+		{
+			exits.push_back(*it);
+		}
+	}
+
+	cout << "\nNPCs:";
+	for (list<Entity*>::const_iterator it = npcs.begin(); it != npcs.cend(); ++it) {
+		(*it)->Look(args);
 	}
 
 	//Creatures
 	cout << "\nCreatures:";
-	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
-		//Creatures
-
-		if ((*it)->m_Type == CREATURE)
-		{
-			(*it)->Look(args);
-		}
+	for (list<Entity*>::const_iterator it = creatures.begin(); it != creatures.cend(); ++it) {
+		(*it)->Look(args);
 	}
 
 	//Items
 	cout << "\nItems:";
-	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
-		if ((*it)->m_Type == ITEM)
-		{
-			(*it)->Look(args);
-		}
+	for (list<Entity*>::const_iterator it = items.begin(); it != items.cend(); ++it) {
+		(*it)->Look(args);
 	}
 
 	//exits
 	cout << "\nExits: ";
-	for (list<Entity*>::const_iterator it = m_Contains.begin(); it != m_Contains.cend(); ++it) {
-		if ((*it)->m_Type == EXIT)
-		{
-			Exit* ex = (Exit*)*it;
-			cout << "\nDirection (" << ex->GetNameFrom(this) << ") you see " << ex->GetDestinationFrom(this)->m_Name << " " << ex->m_Description;
-		}
+	for (list<Entity*>::const_iterator it = exits.begin(); it != exits.cend(); ++it) {
+		Exit* ex = (Exit*)*it;
+		cout << "\nDirection (" << ex->GetNameFrom(this) << ") you see " << ex->GetDestinationFrom(this)->m_Name << " " << ex->m_Description;
 	}
 
 	cout << "\n";

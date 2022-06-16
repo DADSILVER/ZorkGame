@@ -16,7 +16,6 @@ void Player::Look(const vector<string>& args) const
 {
 	if (args.size() == 1) 
 	{
-		cout << "\n" << m_Name << ", " << m_Description << "\n";
 		m_Parent->Look(args);
 	}
 	else 

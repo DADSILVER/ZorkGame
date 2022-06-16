@@ -19,7 +19,6 @@ Entity::~Entity()
 	{
 		if ((*it)->m_Type != EXIT)
 		{
-			cout << m_Name <<"\n";
 			delete* it;
 		}
 	}

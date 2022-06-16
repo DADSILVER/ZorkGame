@@ -44,11 +44,19 @@ int main()
 			}
 			else if (key != '\r') // return
 			{
-				player_input += key;
-				cout << key;
+				if (!(player_input.length() == 0 && key == ' ')) 
+				{
+					player_input += key;
+					cout << key;
+				}	
 			}
 			else
-				globals::Tokenize(player_input, args);
+			{
+				if (player_input.length() > 0)
+				{
+					globals::Tokenize(player_input, args);
+				}
+			}
 		}
 
 		if (World::getInstance().IsGameFinished())
